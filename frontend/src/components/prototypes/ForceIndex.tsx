@@ -77,6 +77,7 @@ const FORCE_CONFIG = {
   DOMAIN_FONT_SIZE: 12, // Font size for category labels in pixels
   LABEL_REPULSION_STRENGTH: 450, // Multiplier for the repulsion force from category labels
   LABEL_REPULSION_MAX_D2: 2000, // Maximum squared distance for label repulsion (~45px)
+  ANIMATION_STOP_TIME: 5000, // Time after which the animation freezes (ms)
 }
 
 type FNode = {
@@ -100,8 +101,21 @@ export function ForceIndex() {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
-    const W = canvas.width
-    const H = canvas.height
+
+    // Handle high-DPI (Retina) displays
+    const dpr = window.devicePixelRatio || 1
+    const logicalW = 400
+    const logicalH = 400
+
+    canvas.width = logicalW * dpr
+    canvas.height = logicalH * dpr
+    canvas.style.width = `${logicalW}px`
+    canvas.style.height = `${logicalH}px`
+
+    ctx.scale(dpr, dpr)
+
+    const W = logicalW
+    const H = logicalH
 
     t0Ref.current = Date.now()
     nodesRef.current = FORCE_NODES_DATA.map((d, i) => {
@@ -119,84 +133,153 @@ export function ForceIndex() {
 
     function draw() {
       const elapsed = Date.now() - t0Ref.current
+
+      const isFinished = elapsed >= FORCE_CONFIG.ANIMATION_STOP_TIME
+
       ctx.clearRect(0, 0, W, H)
+
       const nodes = nodesRef.current
 
-      nodes.forEach((n) => {
-        if (!n.alive && elapsed >= n.spawnAt) n.alive = true
-      })
+      if (!isFinished) {
+        nodes.forEach((n) => {
+          if (!n.alive && elapsed >= n.spawnAt) n.alive = true
+        })
+
+        const lastSpawn = nodes[nodes.length - 1].spawnAt
+
+        const allAlive = elapsed >= lastSpawn
+
+        const settledT = allAlive
+          ? clamp(
+              (elapsed - lastSpawn - FORCE_CONFIG.SETTLE_DELAY) /
+                FORCE_CONFIG.SETTLE_DURATION,
+
+              0,
+
+              1
+            )
+          : 0
+
+        for (const n of nodes) {
+          if (!n.alive) continue
+
+          const cc = FORCE_CENTERS[n.group]
+
+          const springK =
+            FORCE_CONFIG.SPRING_K_BASE +
+            settledT * FORCE_CONFIG.SPRING_K_SETTLED
+
+          n.vx += (cc.x - n.x) * springK
+
+          n.vy += (cc.y - n.y) * springK
+
+          // Repulsion from category label
+
+          if (settledT > FORCE_CONFIG.DOMAIN_THRESHOLD) {
+            const lx = cc.x
+
+            const ly = cc.y - FORCE_CONFIG.DOMAIN_OFFSET
+
+            const dx = n.x - lx
+
+            const dy = n.y - ly
+
+            const d2 = Math.max(dx * dx + dy * dy, 100)
+
+            if (d2 < FORCE_CONFIG.LABEL_REPULSION_MAX_D2) {
+              const la = clamp(
+                (settledT - FORCE_CONFIG.DOMAIN_THRESHOLD) /
+                  (1 - FORCE_CONFIG.DOMAIN_THRESHOLD),
+
+                0,
+
+                1
+              )
+
+              const f = (FORCE_CONFIG.LABEL_REPULSION_STRENGTH * la) / d2
+
+              n.vx += dx * f
+
+              n.vy += dy * f
+            }
+          }
+
+          for (const m of nodes) {
+            if (m === n || !m.alive) continue
+
+            const dx = n.x - m.x
+
+            const dy = n.y - m.y
+
+            const d2 = Math.max(
+              dx * dx + dy * dy,
+              FORCE_CONFIG.REPULSION_MIN_D2
+            )
+
+            if (d2 < FORCE_CONFIG.REPULSION_MAX_D2) {
+              const f = FORCE_CONFIG.REPULSION_STRENGTH / d2
+
+              n.vx += dx * f
+
+              n.vy += dy * f
+            }
+          }
+
+          n.vx *= FORCE_CONFIG.DAMPING
+
+          n.vy *= FORCE_CONFIG.DAMPING
+
+          if (allAlive) {
+            const msSince = elapsed - lastSpawn
+
+            const maxSpeed = Math.max(
+              FORCE_CONFIG.SPEED_LIMIT_MIN,
+
+              FORCE_CONFIG.SPEED_LIMIT_MAX *
+                Math.exp(-msSince / FORCE_CONFIG.SPEED_LIMIT_DECAY)
+            )
+
+            const speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy)
+
+            if (speed > maxSpeed) {
+              n.vx = (n.vx / speed) * maxSpeed
+
+              n.vy = (n.vy / speed) * maxSpeed
+            }
+          }
+
+          n.x = clamp(n.x + n.vx, 16, W - 16)
+
+          n.y = clamp(n.y + n.vy, 16, H - 16)
+        }
+      } else {
+        // Zero out velocities when stopped
+
+        nodes.forEach((n) => {
+          n.vx = 0
+
+          n.vy = 0
+        })
+      }
+
+      // Re-calculate settledT for drawing even when finished
 
       const lastSpawn = nodes[nodes.length - 1].spawnAt
+
       const allAlive = elapsed >= lastSpawn
+
+      const displayElapsed = Math.min(elapsed, FORCE_CONFIG.ANIMATION_STOP_TIME)
+
       const settledT = allAlive
         ? clamp(
-            (elapsed - lastSpawn - FORCE_CONFIG.SETTLE_DELAY) /
+            (displayElapsed - lastSpawn - FORCE_CONFIG.SETTLE_DELAY) /
               FORCE_CONFIG.SETTLE_DURATION,
+
             0,
+
             1
           )
         : 0
-
-      for (const n of nodes) {
-        if (!n.alive) continue
-        const cc = FORCE_CENTERS[n.group]
-        const springK =
-          FORCE_CONFIG.SPRING_K_BASE + settledT * FORCE_CONFIG.SPRING_K_SETTLED
-        n.vx += (cc.x - n.x) * springK
-        n.vy += (cc.y - n.y) * springK
-
-        // Repulsion from category label
-        if (settledT > FORCE_CONFIG.DOMAIN_THRESHOLD) {
-          const lx = cc.x
-          const ly = cc.y - FORCE_CONFIG.DOMAIN_OFFSET
-          const dx = n.x - lx
-          const dy = n.y - ly
-          const d2 = Math.max(dx * dx + dy * dy, 100)
-          if (d2 < FORCE_CONFIG.LABEL_REPULSION_MAX_D2) {
-            const la = clamp(
-              (settledT - FORCE_CONFIG.DOMAIN_THRESHOLD) /
-                (1 - FORCE_CONFIG.DOMAIN_THRESHOLD),
-              0,
-              1
-            )
-            const f = (FORCE_CONFIG.LABEL_REPULSION_STRENGTH * la) / d2
-            n.vx += dx * f
-            n.vy += dy * f
-          }
-        }
-
-        for (const m of nodes) {
-          if (m === n || !m.alive) continue
-          const dx = n.x - m.x
-          const dy = n.y - m.y
-          const d2 = Math.max(dx * dx + dy * dy, FORCE_CONFIG.REPULSION_MIN_D2)
-          if (d2 < FORCE_CONFIG.REPULSION_MAX_D2) {
-            const f = FORCE_CONFIG.REPULSION_STRENGTH / d2
-            n.vx += dx * f
-            n.vy += dy * f
-          }
-        }
-
-        n.vx *= FORCE_CONFIG.DAMPING
-        n.vy *= FORCE_CONFIG.DAMPING
-
-        if (allAlive) {
-          const msSince = elapsed - lastSpawn
-          const maxSpeed = Math.max(
-            FORCE_CONFIG.SPEED_LIMIT_MIN,
-            FORCE_CONFIG.SPEED_LIMIT_MAX *
-              Math.exp(-msSince / FORCE_CONFIG.SPEED_LIMIT_DECAY)
-          )
-          const speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy)
-          if (speed > maxSpeed) {
-            n.vx = (n.vx / speed) * maxSpeed
-            n.vy = (n.vy / speed) * maxSpeed
-          }
-        }
-
-        n.x = clamp(n.x + n.vx, 16, W - 16)
-        n.y = clamp(n.y + n.vy, 16, H - 16)
-      }
 
       if (settledT > 0) {
         FORCE_CENTERS.forEach((cc, g) => {
@@ -334,7 +417,9 @@ export function ForceIndex() {
         })
       }
 
-      rafRef.current = requestAnimationFrame(draw)
+      if (!isFinished) {
+        rafRef.current = requestAnimationFrame(draw)
+      }
     }
 
     draw()
