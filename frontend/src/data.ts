@@ -61,29 +61,26 @@ export const projects = [
     description:
       'Automated infrastructure for distributed PyTorch training jobs across multiple GPU nodes using Ray and Kubernetes.',
     tags: ['Kubernetes', 'Ray', 'AWS'],
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDkULgfoNdUSvPO5Q3zbZXCSSbv3Mz1rsW54n0jNkg5e__8mjP2EJ_VBuJsc49cdu32YSgURGLaIz4xJVcHkHVUu_pvy3oR3tohI-vJv1ydTB_OSjOxwkd2BZkI_Q1RGChS2uPB_J4Bu9_M4aZ5oFZyzi8QIh6GO180OkHDGe-y3gcO_x0oNqrdIQcWEn6NWWgTrscdmt2yWDlBUmbXHgkQG4rK2p4QjvJt8m-lAy_s6n5pRs6Y1STD2R0ibwxoiYLSkuagcD4Ou9jc',
-    imageAlt: 'Abstract blockchain digital network visualization',
     href: '#',
+    result: '10x faster iteration',
+    highlight: true,
   },
   {
     title: 'Model Drift Monitor',
     description:
       'Real-time drift detection system for deployed models. Integrates with Slack for alerts and triggers automated retraining.',
     tags: ['Python', 'Prometheus', 'Grafana'],
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDcHZMipbigE-J9ki17SgG1LFyp04ZR8MVrrVYoxoNFUqQBpkr209ZpXl_7ebjF7ZBsxEODip3nNIyUACZcmVtIrqGhplUZay-uhwAm69v1TiFmnlt09tydYHoDq7w25zXHBNCqNzaqQ0Dna2ZU1Fm21h5mQ2dPg8zjY_zNMJy98osJeG8de2bGwYM6ogIIDcMV5ojbrHZtHFD2rQsKUw3n_o29ABOKmL0WU-iq156D_jmhRk18weSfY1aKhlS6sBKr7N432leeTISO',
-    imageAlt: 'Data analytics dashboard charts on dark screen',
     href: '#',
+    result: '95% alert accuracy',
+    highlight: false,
   },
   {
     title: 'Sentiment API',
     description:
       'High-throughput REST API for sentiment analysis serving a BERT model. Optimized for < 50ms latency.',
     tags: ['FastAPI', 'Docker', 'Redis'],
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuB-e1QcMEHYYt56AeMlkZdNb_M6wtdflYvV-ymywG0uLXvDQ38xD1bTcGdDK81fK7exjUguXm_p9J_Wu21LG26QPgBxNPrG7uz8oyfkGxERoH-Z-vPLDzeTkCteA3e-cvc4y4Fo6_hT0Mjd36ZOVdZlbkV0X3KdxeXE0xYFIvwIiHdC3SbFlXTHTbpBEKQHeGcKnrwswLrJM3pw8QYLkxOxiv8yOwuIpsWE66fJvk3rJD5V8_TfQ-Y4c8snHZdYF5VZ61ZueBvSIRgi',
-    imageAlt: 'Abstract geometric neural network nodes connection',
     href: '#',
+    result: '< 50ms latency',
+    highlight: false,
   },
 ]

@@ -1,12 +1,86 @@
 @import 'tailwindcss';
 
-@theme {
-  --color-primary: #0db9f2;
-  --color-background-dark: #101e22;
-  --color-surface-dark: #15252a;
-  --color-surface-accent: #1c3036;
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Noto Sans', sans-serif;
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(0.98 0 0);
+  --foreground: oklch(0.15 0 0);
+  --card: oklch(0.98 0 0);
+  --card-foreground: oklch(0.15 0 0);
+  --popover: oklch(0.98 0 0);
+  --popover-foreground: oklch(0.15 0 0);
+  --primary: oklch(0.20 0 0);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.92 0 0);
+  --secondary-foreground: oklch(0.20 0 0);
+  --muted: oklch(0.92 0 0);
+  --muted-foreground: oklch(0.50 0 0);
+  --accent: oklch(0.60 0.20 220);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.55 0.25 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.85 0 0);
+  --input: oklch(0.85 0 0);
+  --ring: oklch(0.60 0.20 220);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: oklch(0.12 0.01 240);
+  --foreground: oklch(0.95 0.01 240);
+  --card: oklch(0.16 0.01 240);
+  --card-foreground: oklch(0.95 0.01 240);
+  --popover: oklch(0.14 0.01 240);
+  --popover-foreground: oklch(0.95 0.01 240);
+  --primary: oklch(0.60 0.20 220);
+  --primary-foreground: oklch(0.12 0.01 240);
+  --secondary: oklch(0.22 0.02 240);
+  --secondary-foreground: oklch(0.95 0.01 240);
+  --muted: oklch(0.20 0.02 240);
+  --muted-foreground: oklch(0.65 0.01 240);
+  --accent: oklch(0.60 0.20 220);
+  --accent-foreground: oklch(0.12 0.01 240);
+  --destructive: oklch(0.50 0.22 25);
+  --destructive-foreground: oklch(0.95 0.01 240);
+  --border: oklch(0.22 0.02 240);
+  --input: oklch(0.22 0.02 240);
+  --ring: oklch(0.60 0.20 220);
+}
+
+@theme inline {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Backward-compat aliases for existing components */
+  --color-background-dark: var(--background);
+  --color-surface-dark: var(--card);
+  --color-surface-accent: var(--secondary);
+  --font-display: var(--font-heading);
+  --font-body: var(--font-sans);
 }
 
 *,
@@ -15,26 +89,33 @@
   box-sizing: border-box;
 }
 
-body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  font-family: 'Space Grotesk', sans-serif;
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
 }
 
 .dot-matrix-bg {
-  background-color: #101e22;
-  background-image: radial-gradient(#1c3036 1.5px, transparent 1.5px);
+  background-color: var(--background);
+  background-image: radial-gradient(var(--border) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
 }
 
 .glass-panel {
-  background: rgba(21, 37, 42, 0.7);
+  background: color-mix(in oklch, var(--card) 70%, transparent);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(13, 185, 242, 0.1);
+  border: 1px solid color-mix(in oklch, var(--primary) 10%, transparent);
 }
 
 .git-node {
-  box-shadow: 0 0 0 4px #101e22;
+  box-shadow: 0 0 0 4px var(--background);
 }
 
 ::-webkit-scrollbar {
@@ -42,14 +123,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #101e22;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1c3036;
+  background: var(--secondary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0db9f2;
+  background: var(--primary);
 }

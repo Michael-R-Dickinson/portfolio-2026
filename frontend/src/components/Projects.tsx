@@ -1,43 +1,56 @@
+import { ExternalLink, TrendingUp } from 'lucide-react'
 import { projects } from '../data'
 
 function ProjectCard({
   title,
   description,
   tags,
-  image,
-  imageAlt,
   href,
+  result,
+  highlight,
 }: (typeof projects)[number]) {
   return (
-    <div className="group bg-surface-dark border border-white/5 rounded-2xl overflow-hidden hover:border-primary/50 transition-all flex flex-col h-full">
-      <div className="h-48 w-full bg-surface-accent relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent opacity-80 z-10" />
-        <img
-          alt={imageAlt}
-          src={image}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </div>
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="flex justify-between items-start mb-4">
-          <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">
+    <div
+      className={`rounded-lg border bg-card/50 backdrop-blur text-card-foreground shadow-sm p-6 hover:bg-card transition-all duration-300 group hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 border-border hover:border-primary flex flex-col ${
+        highlight ? 'md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2' : ''
+      }`}
+    >
+      <div className="flex-1">
+        <div className="flex items-start justify-between mb-3">
+          <h3
+            className={`font-heading font-bold group-hover:text-primary transition-colors text-balance ${
+              highlight ? 'text-2xl' : 'text-xl'
+            }`}
+          >
             {title}
           </h3>
-          <a href={href} className="text-slate-400 hover:text-white">
-            <span className="material-symbols-outlined">open_in_new</span>
+          <a
+            href={href}
+            className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 ml-2"
+          >
+            <ExternalLink className="w-5 h-5" />
           </a>
         </div>
-        <p className="text-slate-400 text-sm mb-6 flex-grow">{description}</p>
-        <div className="flex flex-wrap gap-2 mt-auto">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20"
-            >
-              {tag}
-            </span>
-          ))}
+
+        <p className={`text-muted-foreground mb-4 ${highlight ? 'text-base' : 'text-sm'}`}>
+          {description}
+        </p>
+
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4">
+          <TrendingUp className="w-4 h-4" />
+          {result}
         </div>
+      </div>
+
+      <div className="flex flex-wrap gap-2 mt-4">
+        {tags.map((tag) => (
+          <span
+            key={tag}
+            className="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-xs font-semibold text-foreground transition-colors"
+          >
+            {tag}
+          </span>
+        ))}
       </div>
     </div>
   )
@@ -45,17 +58,18 @@ function ProjectCard({
 
 export function Projects() {
   return (
-    <section id="projects" className="w-full max-w-7xl py-20">
-      <div className="flex items-center justify-between gap-4 mb-10 px-2">
-        <h2 className="text-3xl font-bold text-white tracking-tight">// FEATURED_DEPLOYMENTS</h2>
-        <a href="#" className="text-sm font-mono text-primary hover:underline">
-          View all repos -&gt;
-        </a>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project) => (
-          <ProjectCard key={project.title} {...project} />
-        ))}
+    <section id="projects" className="py-20 px-4 bg-card/20">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-heading font-bold text-center mb-4">Projects</h2>
+        <p className="text-center text-muted-foreground mb-16 text-balance">
+          Research, infrastructure, and intelligent systems
+        </p>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+          {projects.map((project) => (
+            <ProjectCard key={project.title} {...project} />
+          ))}
+        </div>
       </div>
     </section>
   )
