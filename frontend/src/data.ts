@@ -103,19 +103,19 @@ export const projects = [
 
 export const roadmapNodes = [
   {
-    title: 'UBC Computer Science',
-    label: 'commit: Sep 2022',
+    title: 'First Engineering Internships',
+    label: '2022–2024',
     description:
-      'Enrolled in CS + Honours Mathematics at UBC. Became a Teaching Assistant for CPSC 110 (Systematic Program Design).',
+      'Data Science intern at SheerID; built CV pipelines and financial ETL systems at Twenty Ideas.',
     side: 'left' as const,
     isCurrent: false,
     isFuture: false,
   },
   {
-    title: 'First Engineering Roles',
-    label: 'commit: 2022–2024',
+    title: 'Enrolled in UBC Computer Science',
+    label: 'Sep 2024',
     description:
-      'Data Science intern at SheerID; built CV pipelines and financial ETL systems at Twenty Ideas.',
+      'Enrolled in CS + Honours Mathematics at UBC. Became a Teaching Assistant for CPSC 110 (Systematic Program Design).',
     side: 'right' as const,
     isCurrent: false,
     isFuture: false,
