@@ -4,13 +4,22 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-slate-500 text-sm">© 2024 Alex Chen. MIT License.</p>
         <div className="flex gap-6">
-          <a href="#" className="text-slate-500 hover:text-primary text-sm font-medium">
+          <a
+            href="#"
+            className="text-slate-500 hover:text-primary text-sm font-medium"
+          >
             GitHub
           </a>
-          <a href="#" className="text-slate-500 hover:text-primary text-sm font-medium">
+          <a
+            href="#"
+            className="text-slate-500 hover:text-primary text-sm font-medium"
+          >
             LinkedIn
           </a>
-          <a href="#" className="text-slate-500 hover:text-primary text-sm font-medium">
+          <a
+            href="#"
+            className="text-slate-500 hover:text-primary text-sm font-medium"
+          >
             Twitter
           </a>
         </div>

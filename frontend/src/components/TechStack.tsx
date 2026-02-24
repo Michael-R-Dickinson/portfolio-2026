@@ -33,7 +33,9 @@ export function TechStack() {
   return (
     <section id="stack" className="w-full max-w-6xl py-20">
       <div className="flex items-center gap-4 mb-10">
-        <h2 className="text-3xl font-bold text-white tracking-tight">// TECHNICAL_STACK</h2>
+        <h2 className="text-3xl font-bold text-white tracking-tight">
+          // TECHNICAL_STACK
+        </h2>
         <div className="h-px bg-white/10 flex-grow" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
