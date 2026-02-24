@@ -1,8 +1,8 @@
 export const navLinks = [
-  { href: '#about', label: './About' },
-  { href: '#stack', label: './Stack' },
-  { href: '#roadmap', label: './Roadmap' },
-  { href: '#projects', label: './Projects' },
+  { href: '#about', label: 'About' },
+  { href: '#stack', label: 'Stack' },
+  { href: '#roadmap', label: 'Roadmap' },
+  { href: '#projects', label: 'Projects' },
 ]
 
 export const techCategories = [
