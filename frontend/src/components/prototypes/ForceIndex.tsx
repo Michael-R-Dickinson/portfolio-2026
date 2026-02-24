@@ -55,8 +55,8 @@ const FORCE_CONFIG = {
   REPULSION_STRENGTH: 200, // Multiplier for the repulsion force between nodes
   DAMPING: 0.8, // Velocity preservation factor (0 = stop, 1 = no friction)
   SETTLE_DELAY: 400, // Delay after all nodes have spawned before settling starts (ms)
-  SETTLE_DURATION: 800, // Duration of the settling transition (ms)
-  SPEED_LIMIT_DECAY: 700, // Rate at which the maximum allowed speed decreases over time
+  SETTLE_DURATION: 400, // Duration of the settling transition (ms)
+  SPEED_LIMIT_DECAY: 1000, // Rate at which the maximum allowed speed decreases over time
   SPEED_LIMIT_MIN: 0.4, // Final minimum speed limit for nodes once settled
   SPEED_LIMIT_MAX: 5, // Initial maximum speed limit for nodes during spawning
   CLUSTER_RADIUS: 110, // Radius of the background glow for each node group
@@ -72,8 +72,11 @@ const FORCE_CONFIG = {
   LABEL_THRESHOLD: 0.5, // Progression point (0-1) when node labels start to fade in
   LABEL_ALPHA: 0.65, // Final opacity of the node text labels
   DOMAIN_THRESHOLD: 0.7, // Progression point (0-1) when group category labels start to fade in
-  DOMAIN_ALPHA: 0.5, // Final opacity of the group category labels
+  DOMAIN_ALPHA: 0.9, // Final opacity of the group category labels
   DOMAIN_OFFSET: 54, // Vertical distance from group center to place the category label
+  DOMAIN_FONT_SIZE: 12, // Font size for category labels in pixels
+  LABEL_REPULSION_STRENGTH: 450, // Multiplier for the repulsion force from category labels
+  LABEL_REPULSION_MAX_D2: 2000, // Maximum squared distance for label repulsion (~45px)
 }
 
 type FNode = {
@@ -141,6 +144,26 @@ export function ForceIndex() {
           FORCE_CONFIG.SPRING_K_BASE + settledT * FORCE_CONFIG.SPRING_K_SETTLED
         n.vx += (cc.x - n.x) * springK
         n.vy += (cc.y - n.y) * springK
+
+        // Repulsion from category label
+        if (settledT > FORCE_CONFIG.DOMAIN_THRESHOLD) {
+          const lx = cc.x
+          const ly = cc.y - FORCE_CONFIG.DOMAIN_OFFSET
+          const dx = n.x - lx
+          const dy = n.y - ly
+          const d2 = Math.max(dx * dx + dy * dy, 100)
+          if (d2 < FORCE_CONFIG.LABEL_REPULSION_MAX_D2) {
+            const la = clamp(
+              (settledT - FORCE_CONFIG.DOMAIN_THRESHOLD) /
+                (1 - FORCE_CONFIG.DOMAIN_THRESHOLD),
+              0,
+              1
+            )
+            const f = (FORCE_CONFIG.LABEL_REPULSION_STRENGTH * la) / d2
+            n.vx += dx * f
+            n.vy += dy * f
+          }
+        }
 
         for (const m of nodes) {
           if (m === n || !m.alive) continue
@@ -282,21 +305,31 @@ export function ForceIndex() {
         const la = clamp(
           (settledT - FORCE_CONFIG.DOMAIN_THRESHOLD) /
             (1 - FORCE_CONFIG.DOMAIN_THRESHOLD),
+
           0,
+
           1
         )
+
         FORCE_CENTERS.forEach((cc, g) => {
           ctx.globalAlpha = la * FORCE_CONFIG.DOMAIN_ALPHA
-          ctx.font = 'bold 9px "Space Mono", monospace'
+
+          ctx.font = `bold ${FORCE_CONFIG.DOMAIN_FONT_SIZE}px "Space Mono", monospace`
+
           ctx.fillStyle = FORCE_COLORS[g]
+
           ctx.textAlign = 'center'
+
           ctx.textBaseline = 'bottom'
+
           ctx.fillText(
             FORCE_DOMAINS[g],
             cc.x,
             cc.y - FORCE_CONFIG.DOMAIN_OFFSET
           )
+
           ctx.textBaseline = 'alphabetic'
+
           ctx.globalAlpha = 1
         })
       }
