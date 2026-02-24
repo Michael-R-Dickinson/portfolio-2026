@@ -134,3 +134,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
+
+@keyframes ss-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes ss-slide-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

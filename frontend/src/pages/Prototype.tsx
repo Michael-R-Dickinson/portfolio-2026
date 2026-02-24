@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type Mouse = { x: number; y: number } | null
 
@@ -660,6 +660,514 @@ function CosineMeter() {
 }
 
 // =========================================================
+// Option 5: The Index Being Built
+// =========================================================
+const FORCE_COLORS = ['#60a5fa', '#34d399', '#f472b6', '#fbbf24']
+const FORCE_DOMAINS = ['ML', 'Infrastructure', 'Systems', 'Frontend']
+const FORCE_CENTERS = [
+  { x: 118, y: 128 },
+  { x: 282, y: 128 },
+  { x: 118, y: 280 },
+  { x: 282, y: 280 },
+]
+const FORCE_NODES_DATA = [
+  { label: 'PyTorch', group: 0 },
+  { label: 'Transformers', group: 0 },
+  { label: 'Scikit-learn', group: 0 },
+  { label: 'BERT', group: 0 },
+  { label: 'Docker', group: 1 },
+  { label: 'Kubernetes', group: 1 },
+  { label: 'AWS', group: 1 },
+  { label: 'Terraform', group: 1 },
+  { label: 'Go', group: 2 },
+  { label: 'Redis', group: 2 },
+  { label: 'gRPC', group: 2 },
+  { label: 'PostgreSQL', group: 2 },
+  { label: 'React', group: 3 },
+  { label: 'TypeScript', group: 3 },
+  { label: 'Tailwind', group: 3 },
+  { label: 'Vite', group: 3 },
+]
+const FORCE_EDGES: [number, number][] = [
+  [0, 1], [0, 2], [1, 3],
+  [4, 5], [4, 6], [5, 7],
+  [8, 9], [9, 10], [8, 11],
+  [12, 13], [13, 14], [12, 15],
+  [0, 4], [2, 8], [6, 10],
+]
+
+type FNode = {
+  label: string
+  group: number
+  x: number
+  y: number
+  vx: number
+  vy: number
+  spawnAt: number
+  alive: boolean
+}
+
+function ForceIndex() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const rafRef = useRef(0)
+  const t0Ref = useRef(0)
+  const nodesRef = useRef<FNode[]>([])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')!
+    const W = canvas.width
+    const H = canvas.height
+
+    t0Ref.current = Date.now()
+    nodesRef.current = FORCE_NODES_DATA.map((d, i) => {
+      const cc = FORCE_CENTERS[d.group]
+      return {
+        ...d,
+        x: cc.x + (Math.random() - 0.5) * 100,
+        y: cc.y + (Math.random() - 0.5) * 100,
+        vx: 0,
+        vy: 0,
+        spawnAt: 100 + i * 130,
+        alive: false,
+      }
+    })
+
+    function draw() {
+      const elapsed = Date.now() - t0Ref.current
+      ctx.clearRect(0, 0, W, H)
+      const nodes = nodesRef.current
+
+      nodes.forEach(n => {
+        if (!n.alive && elapsed >= n.spawnAt) n.alive = true
+      })
+
+      const lastSpawn = nodes[nodes.length - 1].spawnAt
+      const allAlive = elapsed >= lastSpawn
+      const settledT = allAlive ? clamp((elapsed - lastSpawn - 400) / 800, 0, 1) : 0
+
+      for (const n of nodes) {
+        if (!n.alive) continue
+        const cc = FORCE_CENTERS[n.group]
+        const springK = 0.05 + settledT * 0.07
+        n.vx += (cc.x - n.x) * springK
+        n.vy += (cc.y - n.y) * springK
+
+        for (const m of nodes) {
+          if (m === n || !m.alive) continue
+          const dx = n.x - m.x
+          const dy = n.y - m.y
+          const d2 = Math.max(dx * dx + dy * dy, 400)
+          if (d2 < 3600) {
+            const f = 450 / d2
+            n.vx += dx * f
+            n.vy += dy * f
+          }
+        }
+
+        n.vx *= 0.80
+        n.vy *= 0.80
+        n.x = clamp(n.x + n.vx, 16, W - 16)
+        n.y = clamp(n.y + n.vy, 16, H - 16)
+      }
+
+      if (settledT > 0) {
+        FORCE_CENTERS.forEach((cc, g) => {
+          const grd = ctx.createRadialGradient(cc.x, cc.y, 0, cc.x, cc.y, 110)
+          grd.addColorStop(0, FORCE_COLORS[g] + '44')
+          grd.addColorStop(0.55, FORCE_COLORS[g] + '18')
+          grd.addColorStop(1, 'transparent')
+          ctx.globalAlpha = settledT * 0.22
+          ctx.fillStyle = grd
+          ctx.beginPath()
+          ctx.arc(cc.x, cc.y, 110, 0, Math.PI * 2)
+          ctx.fill()
+        })
+      }
+
+      ctx.globalAlpha = settledT * 0.28
+      FORCE_EDGES.forEach(([i, j]) => {
+        const a = nodes[i], b = nodes[j]
+        if (!a?.alive || !b?.alive) return
+        ctx.beginPath()
+        ctx.moveTo(a.x, a.y)
+        ctx.lineTo(b.x, b.y)
+        ctx.strokeStyle = a.group === b.group ? FORCE_COLORS[a.group] : '#ffffff'
+        ctx.lineWidth = 0.7
+        ctx.stroke()
+      })
+      ctx.globalAlpha = 1
+
+      if (settledT < 0.8) {
+        for (let f = 0; f < Math.floor(Math.random() * 3); f++) {
+          const ai = Math.floor(Math.random() * nodes.length)
+          const bi = Math.floor(Math.random() * nodes.length)
+          const a = nodes[ai], b = nodes[bi]
+          if (!a?.alive || !b?.alive || ai === bi) continue
+          ctx.globalAlpha = Math.random() * 0.2
+          ctx.beginPath()
+          ctx.moveTo(a.x, a.y)
+          ctx.lineTo(b.x, b.y)
+          ctx.strokeStyle = '#ffffff'
+          ctx.lineWidth = 0.5
+          ctx.setLineDash([3, 6])
+          ctx.stroke()
+          ctx.setLineDash([])
+        }
+        ctx.globalAlpha = 1
+      }
+
+      for (const n of nodes) {
+        if (!n.alive) continue
+        const color = FORCE_COLORS[n.group]
+        const r = 4
+        const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 4.5)
+        grd.addColorStop(0, color + '55')
+        grd.addColorStop(1, 'transparent')
+        ctx.globalAlpha = 0.8
+        ctx.fillStyle = grd
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, r * 4.5, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.globalAlpha = 1
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2)
+        ctx.fillStyle = color
+        ctx.fill()
+
+        if (settledT > 0.5) {
+          ctx.globalAlpha = clamp((settledT - 0.5) / 0.5, 0, 1) * 0.65
+          ctx.font = '8.5px "Space Mono", monospace'
+          ctx.fillStyle = '#cbd5e1'
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'bottom'
+          ctx.fillText(n.label, n.x, n.y - r - 2)
+          ctx.textBaseline = 'alphabetic'
+          ctx.globalAlpha = 1
+        }
+      }
+
+      if (settledT > 0.7) {
+        const la = clamp((settledT - 0.7) / 0.3, 0, 1)
+        FORCE_CENTERS.forEach((cc, g) => {
+          ctx.globalAlpha = la * 0.5
+          ctx.font = 'bold 9px "Space Mono", monospace'
+          ctx.fillStyle = FORCE_COLORS[g]
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'bottom'
+          ctx.fillText(FORCE_DOMAINS[g], cc.x, cc.y - 54)
+          ctx.textBaseline = 'alphabetic'
+          ctx.globalAlpha = 1
+        })
+      }
+
+      rafRef.current = requestAnimationFrame(draw)
+    }
+
+    draw()
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      width={400}
+      height={400}
+      className="w-full block"
+    />
+  )
+}
+
+// =========================================================
+// Option 6: Reaction–Diffusion Field
+// =========================================================
+function ReactionDiffusion() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const rafRef = useRef(0)
+  const mouseRef = useRef<Mouse>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')!
+
+    const GW = 130
+    const GH = 130
+    const N = GW * GH
+    const Du = 0.21
+    const Dv = 0.105
+    const F = 0.037
+    const K = 0.060
+
+    const u = new Float32Array(N).fill(1)
+    const v = new Float32Array(N).fill(0)
+    const nu = new Float32Array(N)
+    const nv = new Float32Array(N)
+
+    for (let s = 0; s < 22; s++) {
+      const sx = Math.floor(Math.random() * GW)
+      const sy = Math.floor(Math.random() * GH)
+      for (let dy = -4; dy <= 4; dy++) {
+        for (let dx = -4; dx <= 4; dx++) {
+          if (dx * dx + dy * dy <= 16) {
+            const ix = ((sx + dx) + GW) % GW
+            const iy = ((sy + dy) + GH) % GH
+            u[iy * GW + ix] = 0.5
+            v[iy * GW + ix] = 0.25
+          }
+        }
+      }
+    }
+
+    function step() {
+      for (let y = 0; y < GH; y++) {
+        for (let x = 0; x < GW; x++) {
+          const i = y * GW + x
+          const ui = u[i]
+          const vi = v[i]
+          const up = ((y - 1 + GH) % GH) * GW + x
+          const dn = ((y + 1) % GH) * GW + x
+          const lt = y * GW + (x - 1 + GW) % GW
+          const rt = y * GW + (x + 1) % GW
+          const lapU = u[up] + u[dn] + u[lt] + u[rt] - 4 * ui
+          const lapV = v[up] + v[dn] + v[lt] + v[rt] - 4 * vi
+          const uvv = ui * vi * vi
+          nu[i] = Math.max(0, Math.min(1, ui + Du * lapU - uvv + F * (1 - ui)))
+          nv[i] = Math.max(0, Math.min(1, vi + Dv * lapV + uvv - (F + K) * vi))
+        }
+      }
+      u.set(nu)
+      v.set(nv)
+    }
+
+    for (let i = 0; i < 280; i++) step()
+
+    const imgData = ctx.createImageData(GW, GH)
+
+    function draw() {
+      for (let s = 0; s < 6; s++) step()
+
+      if (mouseRef.current) {
+        const mx = Math.floor(mouseRef.current.x * GW / 400)
+        const my = Math.floor(mouseRef.current.y * GH / 400)
+        for (let dy = -5; dy <= 5; dy++) {
+          for (let dx = -5; dx <= 5; dx++) {
+            if (dx * dx + dy * dy <= 25) {
+              const ix = ((mx + dx) + GW) % GW
+              const iy = ((my + dy) + GH) % GH
+              u[iy * GW + ix] = 0.5
+              v[iy * GW + ix] = 0.25
+            }
+          }
+        }
+      }
+
+      for (let i = 0; i < N; i++) {
+        const vn = Math.min(v[i] * 3.4, 1)
+        const r = Math.floor(vn < 0.5 ? vn * 22 : lerp(11, 28, (vn - 0.5) * 2))
+        const g = Math.floor(vn < 0.5 ? vn * 150 : lerp(75, 225, (vn - 0.5) * 2))
+        const b = Math.floor(10 + vn * 228)
+        imgData.data[i * 4] = r
+        imgData.data[i * 4 + 1] = g
+        imgData.data[i * 4 + 2] = Math.min(b, 255)
+        imgData.data[i * 4 + 3] = 255
+      }
+
+      ctx.putImageData(imgData, 0, 0)
+      rafRef.current = requestAnimationFrame(draw)
+    }
+
+    draw()
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      width={130}
+      height={130}
+      className="w-full h-full block cursor-crosshair"
+      style={{ imageRendering: 'pixelated' }}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        mouseRef.current = {
+          x: (e.clientX - rect.left) * (400 / rect.width),
+          y: (e.clientY - rect.top) * (400 / rect.height),
+        }
+      }}
+      onMouseLeave={() => { mouseRef.current = null }}
+    />
+  )
+}
+
+// =========================================================
+// Option 7: Semantic Search Bar
+// =========================================================
+const SS_QUERIES = [
+  {
+    text: 'infrastructure engineering at scale',
+    results: [
+      { title: 'SRE — Accenture', sub: 'Experience', score: 0.97 },
+      { title: 'Kubernetes Platform', sub: 'Project', score: 0.93 },
+      { title: 'Terraform Infra-as-Code', sub: 'Project', score: 0.90 },
+      { title: 'CI/CD Automation', sub: 'Project', score: 0.85 },
+    ],
+  },
+  {
+    text: 'building ML models from scratch pytorch',
+    results: [
+      { title: 'ML Research — UNC', sub: 'Research', score: 0.97 },
+      { title: 'Neural Net from Scratch', sub: 'Project', score: 0.93 },
+      { title: 'NLP Sentiment Pipeline', sub: 'Project', score: 0.88 },
+      { title: 'Data Science Intern', sub: 'Experience', score: 0.82 },
+    ],
+  },
+  {
+    text: 'applied ML with deployment pipeline',
+    results: [
+      { title: 'Job Application Automation', sub: 'Project', score: 0.97 },
+      { title: 'Embedding Search Engine', sub: 'Project', score: 0.94 },
+      { title: 'MLOps Engineering', sub: 'Experience', score: 0.90 },
+      { title: 'Model Drift Monitor', sub: 'Project', score: 0.84 },
+    ],
+  },
+]
+
+function ssScoreColor(s: number): string {
+  if (s >= 0.93) return '#34d399'
+  if (s >= 0.87) return '#60a5fa'
+  return '#94a3b8'
+}
+
+function SemanticSearch() {
+  const [qi, setQi] = useState(0)
+  const [typed, setTyped] = useState(0)
+  const [cards, setCards] = useState(0)
+  const [fading, setFading] = useState(false)
+
+  useEffect(() => {
+    const query = SS_QUERIES[qi]
+    let cleared = false
+    setTyped(0)
+    setCards(0)
+    setFading(false)
+
+    let chars = 0
+    function type() {
+      if (cleared) return
+      chars++
+      setTyped(chars)
+      if (chars < query.text.length) setTimeout(type, 52)
+      else setTimeout(showCards, 550)
+    }
+
+    let c = 0
+    function showCards() {
+      if (cleared) return
+      c++
+      setCards(c)
+      if (c < query.results.length) {
+        setTimeout(showCards, 330)
+      } else {
+        setTimeout(() => {
+          if (cleared) return
+          setFading(true)
+          setTimeout(() => {
+            if (!cleared) setQi(prev => (prev + 1) % SS_QUERIES.length)
+          }, 650)
+        }, 2400)
+      }
+    }
+
+    setTimeout(type, 400)
+    return () => { cleared = true }
+  }, [qi])
+
+  const query = SS_QUERIES[qi]
+
+  return (
+    <div
+      className="w-full h-full p-5 flex flex-col gap-3"
+      style={{ opacity: fading ? 0 : 1, transition: 'opacity 0.6s ease' }}
+    >
+      <p
+        className="text-[10px] font-mono uppercase tracking-widest"
+        style={{ color: 'var(--primary)' }}
+      >
+        semantic vector search
+      </p>
+      <div
+        className="flex items-center gap-2.5 rounded-lg px-3.5 py-2.5"
+        style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+      >
+        <svg
+          width="13"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          style={{ color: '#64748b', flexShrink: 0 }}
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <span className="font-mono text-[11px] text-slate-200 flex-1 min-w-0">
+          {query.text.slice(0, typed)}
+          <span
+            className="inline-block w-px h-[12px] align-middle ml-px"
+            style={{ backgroundColor: 'var(--primary)', animation: 'ss-blink 1s step-end infinite' }}
+          />
+        </span>
+        <span className="text-[9px] font-mono text-slate-600 shrink-0">ada-002</span>
+      </div>
+      <div className="flex flex-col gap-1.5">
+        {query.results.slice(0, cards).map((r, i) => (
+          <div
+            key={`${qi}-${i}`}
+            className="rounded-md px-3 py-2"
+            style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.07)',
+              animation: 'ss-slide-in 0.22s ease forwards',
+            }}
+          >
+            <div className="flex items-baseline justify-between gap-2 mb-1">
+              <span className="font-mono text-[11px] text-slate-200 font-medium truncate">
+                {r.title}
+              </span>
+              <span
+                className="font-mono text-[11px] font-bold tabular-nums shrink-0"
+                style={{ color: ssScoreColor(r.score) }}
+              >
+                {r.score.toFixed(2)}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] font-mono text-slate-500 shrink-0">{r.sub}</span>
+              <div
+                className="flex-1 h-[2px] rounded-full"
+                style={{ background: 'rgba(255,255,255,0.06)' }}
+              >
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${r.score * 100}%`,
+                    backgroundColor: ssScoreColor(r.score),
+                    transition: 'width 0.7s ease',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// =========================================================
 // Prototype page
 // =========================================================
 const SECTIONS = [
@@ -695,6 +1203,30 @@ const SECTIONS = [
       'Two vectors converging as the animation plays \u2014 one labeled \u201cideal MLE candidate\u201d, one \u201cMichael Dickinson\u201d. The cosine similarity ticks toward 1.0.',
     component: <CosineMeter />,
   },
+  {
+    id: 'option-5',
+    num: 5,
+    title: 'The Index Being Built',
+    description:
+      'Nodes drop in from random scatter positions and force-settle into domain clusters. Flicker lines appear as the graph algorithm thinks, then faint Voronoi regions fade in around the stable topology.',
+    component: <ForceIndex />,
+  },
+  {
+    id: 'option-6',
+    num: 6,
+    title: 'Reaction\u2013Diffusion Field',
+    description:
+      'A Gray\u2013Scott reaction\u2013diffusion simulation producing organic Turing patterns \u2014 the same mathematics behind animal fur and coral. Move your cursor across the field to inject a disturbance.',
+    component: <ReactionDiffusion />,
+  },
+  {
+    id: 'option-7',
+    num: 7,
+    title: 'Semantic Search Bar',
+    description:
+      'A fake-but-realistic embedding search UI: queries typewrite in, result cards surface with cosine similarity scores that decay down the ranked list, then the whole thing loops.',
+    component: <SemanticSearch />,
+  },
 ]
 
 export function Prototype() {
@@ -709,8 +1241,8 @@ export function Prototype() {
             Graphic Options
           </h1>
           <p className="text-slate-400 text-sm max-w-lg font-mono">
-            Four interpretations of the vector embedding concept for the hero section.
-            Each is animated; options 1 and 3 are interactive on hover.
+            Seven interpretations of the vector embedding concept for the hero section.
+            Each is animated; options 1, 3, and 6 are interactive on hover.
           </p>
           <nav className="flex gap-5 pt-1">
             {SECTIONS.map(s => (
