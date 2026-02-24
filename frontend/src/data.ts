@@ -170,12 +170,12 @@ export const roadmapNodes: RoadmapNode[] = [
       'Gaining experience in ML Ops and AI systems through internships and projects.',
     isCurrent: true,
     isFuture: false,
+    side: 'left',
   },
   {
     title: 'Goal: Research Scientist in ML + Robotics',
     label: 'future-goal',
-    description:
-      'Pursuing deeper ML research and graduate studies in AI/ML systems.',
+    description: 'Pursuing deeper ML and ML Ops Research.',
     side: 'right',
     isCurrent: false,
     isFuture: true,
