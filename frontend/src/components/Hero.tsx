@@ -1,14 +1,4 @@
-const CODE_SNIPPET = `def deploy_pipeline(config):
-  cluster = connect_k8s()
-  model = load_registry(v=2.0)
-  if model.validate():
-    scale_group.up(nodes=50)
-    metrics.push(grafana)
-
-class NeuralArchitect:
-  def __init__(self):
-    self.stack = ["Torch", "TF"]
-    self.container = "Docker"`
+import { ForceIndex } from './prototypes/ForceIndex'
 
 export function Hero() {
   return (
@@ -53,17 +43,10 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="w-full md:w-[400px] aspect-square relative group">
+      <div className="w-full md:w-[500px] aspect-square relative group">
         <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-700" />
-        <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-surface-dark">
-          <div className="absolute inset-0 p-6 font-mono text-xs text-primary/30 leading-relaxed overflow-hidden opacity-50 select-none whitespace-pre">
-            {CODE_SNIPPET}
-          </div>
-          <img
-            alt="Abstract representation of code on a screen representing software development"
-            className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60 hover:opacity-80 transition-opacity"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9_V8RAKGyizc5079mmTP1BCKFUQlTKbNkiWVJ6TmCBNDi7BcCvzjU_7gT-Iq7gqhpzH_haXj97NefuUAB8NIZUvhwNXNvkTvobapGiJ3VmPLKtW3dQUL4zCBE_QXhZzvkNxtaTm_CWPTiBKlTVrVvviFeRfk2QncOKbufawvFbs8ktfus5pP21OojAOWmDsUTP9JYpOMGRWrzFlwhexCY3rvS8M1AxvrZHhdmrWjB9cDG_jL8d4AIn07de1fGeJIhLWkmTVjWt4oQ"
-          />
+        <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-surface-dark flex items-center justify-center">
+          <ForceIndex />
         </div>
       </div>
     </section>
