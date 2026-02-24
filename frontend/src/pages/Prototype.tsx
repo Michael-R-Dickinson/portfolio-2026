@@ -821,10 +821,10 @@ function ForceIndex() {
       const cc = FORCE_CENTERS[d.group]
       return {
         ...d,
-        x: cc.x + (Math.random() - 0.5) * 100,
-        y: cc.y + (Math.random() - 0.5) * 100,
-        vx: 0,
-        vy: 0,
+        x: (Math.random() - 0.5) * 320,
+        y: (Math.random() - 0.5) * 320,
+        vx: (Math.random() - 0.5) * 3,
+        vy: (Math.random() - 0.5) * 3,
         spawnAt: 100 + i * 130,
         alive: false,
       }
