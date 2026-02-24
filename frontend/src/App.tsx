@@ -1,13 +1,10 @@
 import { Route, Switch } from 'wouter'
-
-function IndexPage() {
-  return <div></div>
-}
+import { Home } from './pages/Home'
 
 function App() {
   return (
     <Switch>
-      <Route path="/" component={IndexPage} />
+      <Route path="/" component={Home} />
     </Switch>
   )
 }
