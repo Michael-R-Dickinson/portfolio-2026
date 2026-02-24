@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { experiences } from '../data'
 
 function ExperienceItem({
@@ -7,7 +8,7 @@ function ExperienceItem({
   isCurrent,
   role,
   company,
-  bullets,
+  description,
 }: (typeof experiences)[number]) {
   return (
     <div className="flex flex-col md:flex-row gap-6 md:gap-12 group">
@@ -31,11 +32,18 @@ function ExperienceItem({
           </h3>
           <p className="text-lg text-slate-300 font-medium">{company}</p>
         </div>
-        <ul className="list-disc list-outside ml-4 text-slate-400 space-y-2 marker:text-primary">
-          {bullets.map((bullet, i) => (
-            <li key={i}>{bullet}</li>
-          ))}
-        </ul>
+        <ReactMarkdown
+          components={{
+            ul: ({ children }) => (
+              <ul className="list-disc list-outside ml-4 text-slate-400 space-y-2 marker:text-primary">
+                {children}
+              </ul>
+            ),
+            li: ({ children }) => <li>{children}</li>,
+          }}
+        >
+          {description}
+        </ReactMarkdown>
       </div>
     </div>
   )

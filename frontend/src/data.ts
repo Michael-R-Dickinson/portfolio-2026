@@ -5,6 +5,8 @@ export const navLinks = [
   { href: '#projects', label: 'Projects' },
 ]
 
+export const heroBio = `I combine my love for infrastructure, mathematics and ML to build deployable AI systems. Architecting scalable **ML pipelines** & automating intelligence. Currently building the future of AI infrastructure.`
+
 export const techCategories = [
   {
     icon: 'memory',
@@ -35,11 +37,9 @@ export const experiences = [
     isCurrent: true,
     role: 'MLOps Engineer Intern',
     company: 'DataCore Systems',
-    bullets: [
-      'Implemented a CI/CD pipeline for model retraining using GitHub Actions and AWS SageMaker, reducing deployment time by 40%.',
-      'Optimized Docker container images for inference services, shrinking image size by 60% and improving cold start times.',
-      'Collaborated with data scientists to version control datasets using DVC and S3.',
-    ],
+    description: `- Implemented a CI/CD pipeline for model retraining using GitHub Actions and AWS SageMaker, reducing deployment time by 40%.
+- Optimized Docker container images for inference services, shrinking image size by 60% and improving cold start times.
+- Collaborated with data scientists to version control datasets using DVC and S3.`,
   },
   {
     period: '2022 — 2023',
@@ -47,11 +47,9 @@ export const experiences = [
     isCurrent: false,
     role: 'Junior Data Engineer',
     company: 'TechFlow Analytics',
-    bullets: [
-      'Built ETL pipelines processing 500GB+ daily data using Apache Airflow and PostgreSQL.',
-      'Developed Python scripts to automate data quality checks, catching 95% of schema anomalies before production.',
-      'Maintained documentation for data infrastructure and API endpoints.',
-    ],
+    description: `- Built ETL pipelines processing 500GB+ daily data using Apache Airflow and PostgreSQL.
+- Developed Python scripts to automate data quality checks, catching 95% of schema anomalies before production.
+- Maintained documentation for data infrastructure and API endpoints.`,
   },
 ]
 
@@ -82,5 +80,40 @@ export const projects = [
     href: '#',
     result: '< 50ms latency',
     highlight: false,
+  },
+]
+
+export const roadmapNodes = [
+  {
+    title: 'B.S. Computer Science',
+    label: 'commit: 2022',
+    description: 'Graduated with Honors. Focus on Distributed Systems and AI.',
+    side: 'left' as const,
+    isCurrent: false,
+    isFuture: false,
+  },
+  {
+    title: 'First Cloud Certification',
+    label: 'commit: 2023',
+    description: 'Achieved AWS Solutions Architect Associate.',
+    side: 'right' as const,
+    isCurrent: false,
+    isFuture: false,
+  },
+  {
+    title: 'MLOps Specialization',
+    label: 'HEAD -> main',
+    description: 'Mastering Kubernetes, Kubeflow, and scalable inference patterns.',
+    side: 'left' as const,
+    isCurrent: true,
+    isFuture: false,
+  },
+  {
+    title: 'LLM Ops Engineering',
+    label: 'branch: feature/llm-ops',
+    description: 'Fine-tuning optimization, Vector DB management, RAG pipelines.',
+    side: 'right' as const,
+    isCurrent: false,
+    isFuture: true,
   },
 ]

@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown'
+import { heroBio } from '../data'
 import { ForceIndex } from './prototypes/ForceIndex'
 
 export function Hero() {
@@ -7,25 +9,28 @@ export function Hero() {
       className="w-full max-w-5xl py-20 md:py-32 flex flex-col md:flex-row gap-12 items-center"
     >
       <div className="flex-1 space-y-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-white/5 text-xs font-mono text-primary animate-pulse">
-          <span className="size-2 rounded-full bg-primary" />
-          <span>System Status: Online</span>
-        </div>
-
         <div className="space-y-4">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-none text-white">
             Hello, World.
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
-              I'm Alex Chen.
+              I'm Michael
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-400 font-light max-w-2xl">
-            Architecting scalable{' '}
-            <span className="text-white font-medium">ML pipelines</span> &amp;
-            automating intelligence. Currently building the future of AI
-            infrastructure.
-          </p>
+          <ReactMarkdown
+            components={{
+              p: ({ children }) => (
+                <p className="text-xl md:text-2xl text-slate-400 font-light max-w-2xl">
+                  {children}
+                </p>
+              ),
+              strong: ({ children }) => (
+                <strong className="text-white font-medium">{children}</strong>
+              ),
+            }}
+          >
+            {heroBio}
+          </ReactMarkdown>
         </div>
 
         <div className="flex flex-wrap gap-4 pt-4">

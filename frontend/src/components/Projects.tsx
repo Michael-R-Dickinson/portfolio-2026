@@ -1,4 +1,5 @@
 import { ExternalLink, TrendingUp } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
 import { projects } from '../data'
 
 function ProjectCard({
@@ -34,11 +35,19 @@ function ProjectCard({
           </a>
         </div>
 
-        <p
-          className={`text-muted-foreground mb-4 ${highlight ? 'text-base' : 'text-sm'}`}
+        <ReactMarkdown
+          components={{
+            p: ({ children }) => (
+              <p
+                className={`text-muted-foreground mb-4 ${highlight ? 'text-base' : 'text-sm'}`}
+              >
+                {children}
+              </p>
+            ),
+          }}
         >
           {description}
-        </p>
+        </ReactMarkdown>
 
         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4">
           <TrendingUp className="w-4 h-4" />
