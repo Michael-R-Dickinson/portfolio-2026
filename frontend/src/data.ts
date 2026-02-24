@@ -101,13 +101,39 @@ export const projects = [
   },
 ]
 
-export const roadmapNodes = [
+type RoadmapNode = {
+  title: string
+  label: string
+  description: string
+  side?: 'left' | 'right'
+  isCurrent: boolean
+  isFuture: boolean
+}
+
+export const roadmapNodes: RoadmapNode[] = [
   {
     title: 'First Engineering Internships',
     label: '2022–2024',
     description:
-      'Data Science intern at SheerID; built CV pipelines and financial ETL systems at Twenty Ideas.',
-    side: 'left' as const,
+      'Data Science intern at SheerID\n\nDeveloped fullstack and DevOps skills at Twenty Ideas.',
+    side: 'left',
+    isCurrent: false,
+    isFuture: false,
+  },
+  {
+    title: 'Received AI Research Award',
+    label: 'Mar 2024',
+    description:
+      'Received American Psychological Association Achievement Award for research on suicidal ideation detection using transformer architecture with BERT and ViT.',
+    isCurrent: false,
+    isFuture: false,
+  },
+  {
+    title: 'Gap-Year for Full-Time SWE',
+    label: '2024',
+    description:
+      'Software Engineer at Twenty Ideas, focusing on infrastructure deployments and fullstack engineering.',
+    side: 'left',
     isCurrent: false,
     isFuture: false,
   },
@@ -115,26 +141,42 @@ export const roadmapNodes = [
     title: 'Enrolled in UBC Computer Science',
     label: 'Sep 2024',
     description:
-      'Enrolled in CS + Honours Mathematics at UBC. Became a Teaching Assistant for CPSC 110 (Systematic Program Design).',
-    side: 'right' as const,
+      'Enrolled in CS + Honours Mathematics at UBC. \n\nBecame a Teaching Assistant for CPSC 110 (Systematic Program Design).',
+    side: 'right',
     isCurrent: false,
     isFuture: false,
   },
   {
-    title: 'Drone Systems & Agentic AI',
-    label: 'HEAD -> main',
+    title: 'Joined UBC Uncrewed Aircraft Systems',
+    label: 'Oct 2024',
     description:
-      'Leading drone ground comms at UBC UAS (National 2nd Place, AEAC 2025). Built agentic workflow engines at DevSwarm.',
-    side: 'left' as const,
+      'Leading ground communications to national awards: 2nd Place AEAC 2025, 1st Nationally SUAS 2025.',
+    side: 'left',
+    isCurrent: false,
+    isFuture: false,
+  },
+  {
+    title: 'SWE Internship at DevSwarm',
+    label: 'Summer 2025',
+    description: 'Building LLM-powered coding tools and agentic workflows.',
+    side: 'right',
+    isCurrent: false,
+    isFuture: false,
+  },
+  {
+    title: 'Breaking into ML Ops and AI Systems',
+    label: '2025',
+    description:
+      'Gaining experience in ML Ops and AI systems through internships and projects.',
     isCurrent: true,
     isFuture: false,
   },
   {
-    title: 'ML Research & Graduate Studies',
-    label: 'branch: feature/research',
+    title: 'Goal: Research Scientist in ML + Robotics',
+    label: 'future-goal',
     description:
       'Pursuing deeper ML research and graduate studies in AI/ML systems.',
-    side: 'right' as const,
+    side: 'right',
     isCurrent: false,
     isFuture: true,
   },
