@@ -46,7 +46,7 @@ export function Experience() {
     <section id="experience" className="w-full max-w-5xl py-20">
       <div className="flex items-center gap-4 mb-12">
         <h2 className="text-3xl font-bold text-white tracking-tight">
-          // EXPERIENCE_LOG
+          // EXPERIENCE
         </h2>
         <div className="h-px bg-white/10 flex-grow" />
       </div>

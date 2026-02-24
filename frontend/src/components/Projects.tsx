@@ -60,10 +60,9 @@ export function Projects() {
   return (
     <section id="projects" className="py-20 px-4 bg-card/20">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-heading font-bold text-center mb-4">Projects</h2>
-        <p className="text-center text-muted-foreground mb-16 text-balance">
-          Research, infrastructure, and intelligent systems
-        </p>
+        <h2 className="text-3xl font-bold text-white tracking-tight mb-10">
+          // FEATURED_DEPLOYMENTS
+        </h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
           {projects.map((project) => (
