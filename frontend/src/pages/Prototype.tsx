@@ -45,12 +45,18 @@ const EMBED_NODES = [
 ]
 
 const EMBED_CONNECTIONS: [number, number][] = [
-  [6, 8], [6, 7], [7, 8],
-  [6, 10], [7, 11],
-  [0, 2], [0, 3],
+  [6, 8],
+  [6, 7],
+  [7, 8],
+  [6, 10],
+  [7, 11],
+  [0, 2],
+  [0, 3],
   [1, 4],
-  [10, 12], [10, 11],
-  [16, 17], [14, 16],
+  [10, 12],
+  [10, 11],
+  [16, 17],
+  [14, 16],
 ]
 
 const GROUP_COLORS = ['#60a5fa', '#34d399', '#f472b6', '#fbbf24']
@@ -85,11 +91,15 @@ function EmbeddingSpace() {
     function draw() {
       ctx.clearRect(0, 0, W, H)
       const angle = angleRef.current
-      const proj = EMBED_NODES.map(n => ({ ...n, ...project(n.x, n.y, n.z, angle) }))
+      const proj = EMBED_NODES.map((n) => ({
+        ...n,
+        ...project(n.x, n.y, n.z, angle),
+      }))
 
       EMBED_CONNECTIONS.forEach(([i, j]) => {
-        const a = proj[i], b = proj[j]
-        const alpha = 0.08 + Math.min(a.s, b.s) * 0.20
+        const a = proj[i],
+          b = proj[j]
+        const alpha = 0.08 + Math.min(a.s, b.s) * 0.2
         ctx.beginPath()
         ctx.moveTo(a.sx, a.sy)
         ctx.lineTo(b.sx, b.sy)
@@ -105,7 +115,10 @@ function EmbeddingSpace() {
           const dx = p.sx - mouseRef.current!.x
           const dy = p.sy - mouseRef.current!.y
           const d = Math.sqrt(dx * dx + dy * dy)
-          if (d < minDist) { minDist = d; hoveredIdx = i }
+          if (d < minDist) {
+            minDist = d
+            hoveredIdx = i
+          }
         })
       }
 
@@ -167,12 +180,20 @@ function EmbeddingSpace() {
             y: (e.clientY - rect.top) * (400 / rect.height),
           }
         }}
-        onMouseLeave={() => { mouseRef.current = null }}
+        onMouseLeave={() => {
+          mouseRef.current = null
+        }}
       />
       <div className="flex flex-wrap gap-4 justify-center">
         {GROUP_LABELS.map((label, i) => (
-          <span key={label} className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
-            <span className="size-2 rounded-full inline-block" style={{ backgroundColor: GROUP_COLORS[i] }} />
+          <span
+            key={label}
+            className="flex items-center gap-1.5 text-xs text-slate-400 font-mono"
+          >
+            <span
+              className="size-2 rounded-full inline-block"
+              style={{ backgroundColor: GROUP_COLORS[i] }}
+            />
             {label}
           </span>
         ))}
@@ -193,12 +214,24 @@ const RETRIEVAL_NODES = [
 ]
 
 const BG_PTS = [
-  { x: 48, y: 72 }, { x: 345, y: 82 }, { x: 82, y: 308 },
-  { x: 375, y: 250 }, { x: 122, y: 388 }, { x: 308, y: 376 },
-  { x: 355, y: 162 }, { x: 38, y: 158 }, { x: 222, y: 382 },
-  { x: 58, y: 390 }, { x: 392, y: 372 }, { x: 162, y: 92 },
-  { x: 312, y: 105 }, { x: 385, y: 318 }, { x: 28, y: 250 },
-  { x: 268, y: 48 }, { x: 198, y: 138 }, { x: 338, y: 208 },
+  { x: 48, y: 72 },
+  { x: 345, y: 82 },
+  { x: 82, y: 308 },
+  { x: 375, y: 250 },
+  { x: 122, y: 388 },
+  { x: 308, y: 376 },
+  { x: 355, y: 162 },
+  { x: 38, y: 158 },
+  { x: 222, y: 382 },
+  { x: 58, y: 390 },
+  { x: 392, y: 372 },
+  { x: 162, y: 92 },
+  { x: 312, y: 105 },
+  { x: 385, y: 318 },
+  { x: 28, y: 250 },
+  { x: 268, y: 48 },
+  { x: 198, y: 138 },
+  { x: 338, y: 208 },
 ]
 
 function QueryRetrieval() {
@@ -211,7 +244,8 @@ function QueryRetrieval() {
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
 
-    const W = canvas.width, H = canvas.height
+    const W = canvas.width,
+      H = canvas.height
     const LOOP = 7200
 
     function draw() {
@@ -220,7 +254,7 @@ function QueryRetrieval() {
       const globalA = 1 - clamp((elapsed - 5800) / 900, 0, 1)
 
       const bgFade = clamp(elapsed / 700, 0, 1)
-      BG_PTS.forEach(n => {
+      BG_PTS.forEach((n) => {
         ctx.globalAlpha = bgFade * 0.18 * globalA
         ctx.beginPath()
         ctx.arc(n.x, n.y, 2.5, 0, Math.PI * 2)
@@ -228,7 +262,7 @@ function QueryRetrieval() {
         ctx.fill()
       })
 
-      RETRIEVAL_NODES.forEach(n => {
+      RETRIEVAL_NODES.forEach((n) => {
         ctx.globalAlpha = bgFade * 0.15 * globalA
         ctx.beginPath()
         ctx.arc(n.x, n.y, 4, 0, Math.PI * 2)
@@ -262,7 +296,9 @@ function QueryRetrieval() {
 
         const linesT = clamp((elapsed - 1600) / 1600, 0, 1)
         if (linesT > 0) {
-          const top4 = [...RETRIEVAL_NODES].sort((a, b) => b.match - a.match).slice(0, 4)
+          const top4 = [...RETRIEVAL_NODES]
+            .sort((a, b) => b.match - a.match)
+            .slice(0, 4)
           top4.forEach((n, idx) => {
             const lineT = clamp(linesT * 1.8 - idx * 0.32, 0, 1)
             if (lineT <= 0) return
@@ -281,7 +317,12 @@ function QueryRetrieval() {
 
             if (lineT > 0.88) {
               const arrT = clamp((lineT - 0.88) / 0.12, 0, 1)
-              const mc = n.match > 0.92 ? '#34d399' : n.match > 0.86 ? '#60a5fa' : '#94a3b8'
+              const mc =
+                n.match > 0.92
+                  ? '#34d399'
+                  : n.match > 0.86
+                    ? '#60a5fa'
+                    : '#94a3b8'
               const ngrd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, 22)
               ngrd.addColorStop(0, mc + '88')
               ngrd.addColorStop(1, 'transparent')
@@ -301,11 +342,18 @@ function QueryRetrieval() {
 
         const labelsT = clamp((elapsed - 3300) / 2200, 0, 1)
         if (labelsT > 0) {
-          const sorted = [...RETRIEVAL_NODES].sort((a, b) => b.match - a.match).slice(0, 4)
+          const sorted = [...RETRIEVAL_NODES]
+            .sort((a, b) => b.match - a.match)
+            .slice(0, 4)
           sorted.forEach((n, idx) => {
             const lt = clamp(labelsT * 2.5 - idx * 0.45, 0, 1)
             if (lt <= 0) return
-            const mc = n.match > 0.92 ? '#34d399' : n.match > 0.86 ? '#60a5fa' : '#94a3b8'
+            const mc =
+              n.match > 0.92
+                ? '#34d399'
+                : n.match > 0.86
+                  ? '#60a5fa'
+                  : '#94a3b8'
             ctx.globalAlpha = lt * globalA
 
             const bx = clamp(n.x > 210 ? n.x - 148 : n.x + 10, 2, 258)
@@ -318,11 +366,16 @@ function QueryRetrieval() {
             ctx.font = 'bold 9px monospace'
             ctx.fillStyle = mc
             ctx.textAlign = 'left'
-            ctx.fillText(`${(n.match * 100).toFixed(0)}% match`, bx + 6, by + 10)
+            ctx.fillText(
+              `${(n.match * 100).toFixed(0)}% match`,
+              bx + 6,
+              by + 10
+            )
 
             ctx.font = '9px monospace'
             ctx.fillStyle = 'rgba(255,255,255,0.75)'
-            const truncated = n.label.length > 20 ? n.label.slice(0, 19) + '\u2026' : n.label
+            const truncated =
+              n.label.length > 20 ? n.label.slice(0, 19) + '\u2026' : n.label
             ctx.fillText(truncated, bx + 6, by + 22)
 
             ctx.globalAlpha = 1
@@ -339,12 +392,7 @@ function QueryRetrieval() {
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={400}
-      height={400}
-      className="w-full block"
-    />
+    <canvas ref={canvasRef} width={400} height={400} className="w-full block" />
   )
 }
 
@@ -352,15 +400,24 @@ function QueryRetrieval() {
 // Option 3: Latent Space Portrait
 // =========================================================
 type Particle = {
-  ox: number; oy: number
-  x: number; y: number
-  vx: number; vy: number
+  ox: number
+  oy: number
+  x: number
+  y: number
+  vx: number
+  vy: number
   group: number
   alpha: number
   size: number
 }
 
-const PORTRAIT_REGION_COLORS = ['#60a5fa', '#34d399', '#f472b6', '#fbbf24', '#a78bfa']
+const PORTRAIT_REGION_COLORS = [
+  '#60a5fa',
+  '#34d399',
+  '#f472b6',
+  '#fbbf24',
+  '#a78bfa',
+]
 const PORTRAIT_REGION_LABELS = [
   'Deep Learning & NLP',
   'Infrastructure & Cloud',
@@ -371,7 +428,8 @@ const PORTRAIT_REGION_LABELS = [
 
 function isInPortrait(x: number, y: number): boolean {
   if (((x - 200) / 78) ** 2 + ((y - 155) / 90) ** 2 < 0.95) return true
-  if (((x - 200) / 130) ** 2 + ((y - 320) / 60) ** 2 < 0.95 && y > 280) return true
+  if (((x - 200) / 130) ** 2 + ((y - 320) / 60) ** 2 < 0.95 && y > 280)
+    return true
   return false
 }
 
@@ -391,8 +449,12 @@ function buildParticles(): Particle[] {
         const jx = gx + (Math.random() - 0.5) * 7
         const jy = gy + (Math.random() - 0.5) * 7
         particles.push({
-          ox: jx, oy: jy, x: jx, y: jy,
-          vx: 0, vy: 0,
+          ox: jx,
+          oy: jy,
+          x: jx,
+          y: jy,
+          vx: 0,
+          vy: 0,
           group: getRegion(jx, jy),
           alpha: 0.55 + Math.random() * 0.45,
           size: 1.4 + Math.random() * 1.4,
@@ -404,8 +466,12 @@ function buildParticles(): Particle[] {
     const bx = Math.random() * 400
     const by = Math.random() * 400
     particles.push({
-      ox: bx, oy: by, x: bx, y: by,
-      vx: 0, vy: 0,
+      ox: bx,
+      oy: by,
+      x: bx,
+      y: by,
+      vx: 0,
+      vy: 0,
       group: -1,
       alpha: 0.06 + Math.random() * 0.07,
       size: 1 + Math.random() * 0.8,
@@ -427,7 +493,8 @@ function LatentPortrait() {
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
 
-    const W = canvas.width, H = canvas.height
+    const W = canvas.width,
+      H = canvas.height
 
     function draw() {
       ctx.clearRect(0, 0, W, H)
@@ -476,7 +543,8 @@ function LatentPortrait() {
         const color = PORTRAIT_REGION_COLORS[hoveredRegion]
         ctx.font = 'bold 12px "Space Mono", monospace'
         const tw = ctx.measureText(label).width
-        const lx = W / 2, ly = H - 18
+        const lx = W / 2,
+          ly = H - 18
         ctx.fillStyle = 'rgba(8,12,22,0.92)'
         ctx.beginPath()
         ctx.roundRect(lx - tw / 2 - 12, ly - 16, tw + 24, 22, 5)
@@ -506,7 +574,9 @@ function LatentPortrait() {
           y: (e.clientY - rect.top) * (400 / rect.height),
         }
       }}
-      onMouseLeave={() => { mouseRef.current = null }}
+      onMouseLeave={() => {
+        mouseRef.current = null
+      }}
     />
   )
 }
@@ -524,8 +594,10 @@ function CosineMeter() {
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
 
-    const W = canvas.width, H = canvas.height
-    const OX = 152, OY = 275
+    const W = canvas.width,
+      H = canvas.height
+    const OX = 152,
+      OY = 275
     const VEC_LEN = 140
 
     const IDEAL_ANGLE = (-78 * Math.PI) / 180
@@ -533,7 +605,13 @@ function CosineMeter() {
     const END_DIFF = (9 * Math.PI) / 180
     const LOOP = 5400
 
-    function drawArrow(x1: number, y1: number, x2: number, y2: number, color: string) {
+    function drawArrow(
+      x1: number,
+      y1: number,
+      x2: number,
+      y2: number,
+      color: string
+    ) {
       const angle = Math.atan2(y2 - y1, x2 - x1)
       const hl = 10
       ctx.beginPath()
@@ -544,8 +622,14 @@ function CosineMeter() {
       ctx.stroke()
       ctx.beginPath()
       ctx.moveTo(x2, y2)
-      ctx.lineTo(x2 - hl * Math.cos(angle - 0.38), y2 - hl * Math.sin(angle - 0.38))
-      ctx.lineTo(x2 - hl * Math.cos(angle + 0.38), y2 - hl * Math.sin(angle + 0.38))
+      ctx.lineTo(
+        x2 - hl * Math.cos(angle - 0.38),
+        y2 - hl * Math.sin(angle - 0.38)
+      )
+      ctx.lineTo(
+        x2 - hl * Math.cos(angle + 0.38),
+        y2 - hl * Math.sin(angle + 0.38)
+      )
       ctx.closePath()
       ctx.fillStyle = color
       ctx.fill()
@@ -587,7 +671,11 @@ function CosineMeter() {
       ctx.fillStyle = 'rgba(251,191,36,0.85)'
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
-      ctx.fillText(`${(diff * 180 / Math.PI).toFixed(0)}\u00b0`, OX + lr * Math.cos(midAngle), OY + lr * Math.sin(midAngle))
+      ctx.fillText(
+        `${((diff * 180) / Math.PI).toFixed(0)}\u00b0`,
+        OX + lr * Math.cos(midAngle),
+        OY + lr * Math.sin(midAngle)
+      )
       ctx.textBaseline = 'alphabetic'
 
       drawArrow(OX, OY, idealX2, idealY2, '#60a5fa')
@@ -610,7 +698,8 @@ function CosineMeter() {
       ctx.fill()
 
       // Score panel (right-center)
-      const sx = 300, sy = 148
+      const sx = 300,
+        sy = 148
 
       const scoreR = Math.round(lerp(96, 52, t))
       const scoreG = Math.round(lerp(165, 211, t))
@@ -626,8 +715,10 @@ function CosineMeter() {
       ctx.fillStyle = 'rgba(255,255,255,0.38)'
       ctx.fillText('cosine_similarity(a, b)', sx, sy + 18)
 
-      const bw = 116, bh = 7
-      const bx2 = sx - bw / 2, by2 = sy + 34
+      const bw = 116,
+        bh = 7
+      const bx2 = sx - bw / 2,
+        by2 = sy + 34
       ctx.fillStyle = 'rgba(255,255,255,0.07)'
       ctx.beginPath()
       ctx.roundRect(bx2, by2, bw, bh, 3)
@@ -650,12 +741,7 @@ function CosineMeter() {
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={400}
-      height={400}
-      className="w-full block"
-    />
+    <canvas ref={canvasRef} width={400} height={400} className="w-full block" />
   )
 }
 
@@ -689,11 +775,21 @@ const FORCE_NODES_DATA = [
   { label: 'Vite', group: 3 },
 ]
 const FORCE_EDGES: [number, number][] = [
-  [0, 1], [0, 2], [1, 3],
-  [4, 5], [4, 6], [5, 7],
-  [8, 9], [9, 10], [8, 11],
-  [12, 13], [13, 14], [12, 15],
-  [0, 4], [2, 8], [6, 10],
+  [0, 1],
+  [0, 2],
+  [1, 3],
+  [4, 5],
+  [4, 6],
+  [5, 7],
+  [8, 9],
+  [9, 10],
+  [8, 11],
+  [12, 13],
+  [13, 14],
+  [12, 15],
+  [0, 4],
+  [2, 8],
+  [6, 10],
 ]
 
 type FNode = {
@@ -739,13 +835,15 @@ function ForceIndex() {
       ctx.clearRect(0, 0, W, H)
       const nodes = nodesRef.current
 
-      nodes.forEach(n => {
+      nodes.forEach((n) => {
         if (!n.alive && elapsed >= n.spawnAt) n.alive = true
       })
 
       const lastSpawn = nodes[nodes.length - 1].spawnAt
       const allAlive = elapsed >= lastSpawn
-      const settledT = allAlive ? clamp((elapsed - lastSpawn - 400) / 800, 0, 1) : 0
+      const settledT = allAlive
+        ? clamp((elapsed - lastSpawn - 400) / 800, 0, 1)
+        : 0
 
       for (const n of nodes) {
         if (!n.alive) continue
@@ -758,16 +856,27 @@ function ForceIndex() {
           if (m === n || !m.alive) continue
           const dx = n.x - m.x
           const dy = n.y - m.y
-          const d2 = Math.max(dx * dx + dy * dy, 400)
+          const d2 = Math.max(dx * dx + dy * dy, 200)
           if (d2 < 3600) {
-            const f = 450 / d2
+            const f = 200 / d2
             n.vx += dx * f
             n.vy += dy * f
           }
         }
 
-        n.vx *= 0.80
-        n.vy *= 0.80
+        n.vx *= 0.8
+        n.vy *= 0.8
+
+        if (allAlive) {
+          const msSince = elapsed - lastSpawn
+          const maxSpeed = Math.max(0.4, 5 * Math.exp(-msSince / 700))
+          const speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy)
+          if (speed > maxSpeed) {
+            n.vx = (n.vx / speed) * maxSpeed
+            n.vy = (n.vy / speed) * maxSpeed
+          }
+        }
+
         n.x = clamp(n.x + n.vx, 16, W - 16)
         n.y = clamp(n.y + n.vy, 16, H - 16)
       }
@@ -788,12 +897,14 @@ function ForceIndex() {
 
       ctx.globalAlpha = settledT * 0.28
       FORCE_EDGES.forEach(([i, j]) => {
-        const a = nodes[i], b = nodes[j]
+        const a = nodes[i],
+          b = nodes[j]
         if (!a?.alive || !b?.alive) return
         ctx.beginPath()
         ctx.moveTo(a.x, a.y)
         ctx.lineTo(b.x, b.y)
-        ctx.strokeStyle = a.group === b.group ? FORCE_COLORS[a.group] : '#ffffff'
+        ctx.strokeStyle =
+          a.group === b.group ? FORCE_COLORS[a.group] : '#ffffff'
         ctx.lineWidth = 0.7
         ctx.stroke()
       })
@@ -803,7 +914,8 @@ function ForceIndex() {
         for (let f = 0; f < Math.floor(Math.random() * 3); f++) {
           const ai = Math.floor(Math.random() * nodes.length)
           const bi = Math.floor(Math.random() * nodes.length)
-          const a = nodes[ai], b = nodes[bi]
+          const a = nodes[ai],
+            b = nodes[bi]
           if (!a?.alive || !b?.alive || ai === bi) continue
           ctx.globalAlpha = Math.random() * 0.2
           ctx.beginPath()
@@ -870,12 +982,7 @@ function ForceIndex() {
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={400}
-      height={400}
-      className="w-full block"
-    />
+    <canvas ref={canvasRef} width={400} height={400} className="w-full block" />
   )
 }
 
@@ -898,7 +1005,7 @@ function ReactionDiffusion() {
     const Du = 0.21
     const Dv = 0.105
     const F = 0.037
-    const K = 0.060
+    const K = 0.06
 
     const u = new Float32Array(N).fill(1)
     const v = new Float32Array(N).fill(0)
@@ -911,8 +1018,8 @@ function ReactionDiffusion() {
       for (let dy = -4; dy <= 4; dy++) {
         for (let dx = -4; dx <= 4; dx++) {
           if (dx * dx + dy * dy <= 16) {
-            const ix = ((sx + dx) + GW) % GW
-            const iy = ((sy + dy) + GH) % GH
+            const ix = (sx + dx + GW) % GW
+            const iy = (sy + dy + GH) % GH
             u[iy * GW + ix] = 0.5
             v[iy * GW + ix] = 0.25
           }
@@ -928,8 +1035,8 @@ function ReactionDiffusion() {
           const vi = v[i]
           const up = ((y - 1 + GH) % GH) * GW + x
           const dn = ((y + 1) % GH) * GW + x
-          const lt = y * GW + (x - 1 + GW) % GW
-          const rt = y * GW + (x + 1) % GW
+          const lt = y * GW + ((x - 1 + GW) % GW)
+          const rt = y * GW + ((x + 1) % GW)
           const lapU = u[up] + u[dn] + u[lt] + u[rt] - 4 * ui
           const lapV = v[up] + v[dn] + v[lt] + v[rt] - 4 * vi
           const uvv = ui * vi * vi
@@ -949,13 +1056,13 @@ function ReactionDiffusion() {
       for (let s = 0; s < 6; s++) step()
 
       if (mouseRef.current) {
-        const mx = Math.floor(mouseRef.current.x * GW / 400)
-        const my = Math.floor(mouseRef.current.y * GH / 400)
+        const mx = Math.floor((mouseRef.current.x * GW) / 400)
+        const my = Math.floor((mouseRef.current.y * GH) / 400)
         for (let dy = -5; dy <= 5; dy++) {
           for (let dx = -5; dx <= 5; dx++) {
             if (dx * dx + dy * dy <= 25) {
-              const ix = ((mx + dx) + GW) % GW
-              const iy = ((my + dy) + GH) % GH
+              const ix = (mx + dx + GW) % GW
+              const iy = (my + dy + GH) % GH
               u[iy * GW + ix] = 0.5
               v[iy * GW + ix] = 0.25
             }
@@ -966,7 +1073,9 @@ function ReactionDiffusion() {
       for (let i = 0; i < N; i++) {
         const vn = Math.min(v[i] * 3.4, 1)
         const r = Math.floor(vn < 0.5 ? vn * 22 : lerp(11, 28, (vn - 0.5) * 2))
-        const g = Math.floor(vn < 0.5 ? vn * 150 : lerp(75, 225, (vn - 0.5) * 2))
+        const g = Math.floor(
+          vn < 0.5 ? vn * 150 : lerp(75, 225, (vn - 0.5) * 2)
+        )
         const b = Math.floor(10 + vn * 228)
         imgData.data[i * 4] = r
         imgData.data[i * 4 + 1] = g
@@ -996,7 +1105,9 @@ function ReactionDiffusion() {
           y: (e.clientY - rect.top) * (400 / rect.height),
         }
       }}
-      onMouseLeave={() => { mouseRef.current = null }}
+      onMouseLeave={() => {
+        mouseRef.current = null
+      }}
     />
   )
 }
@@ -1010,7 +1121,7 @@ const SS_QUERIES = [
     results: [
       { title: 'SRE — Accenture', sub: 'Experience', score: 0.97 },
       { title: 'Kubernetes Platform', sub: 'Project', score: 0.93 },
-      { title: 'Terraform Infra-as-Code', sub: 'Project', score: 0.90 },
+      { title: 'Terraform Infra-as-Code', sub: 'Project', score: 0.9 },
       { title: 'CI/CD Automation', sub: 'Project', score: 0.85 },
     ],
   },
@@ -1028,7 +1139,7 @@ const SS_QUERIES = [
     results: [
       { title: 'Job Application Automation', sub: 'Project', score: 0.97 },
       { title: 'Embedding Search Engine', sub: 'Project', score: 0.94 },
-      { title: 'MLOps Engineering', sub: 'Experience', score: 0.90 },
+      { title: 'MLOps Engineering', sub: 'Experience', score: 0.9 },
       { title: 'Model Drift Monitor', sub: 'Project', score: 0.84 },
     ],
   },
@@ -1074,14 +1185,16 @@ function SemanticSearch() {
           if (cleared) return
           setFading(true)
           setTimeout(() => {
-            if (!cleared) setQi(prev => (prev + 1) % SS_QUERIES.length)
+            if (!cleared) setQi((prev) => (prev + 1) % SS_QUERIES.length)
           }, 650)
         }, 2400)
       }
     }
 
     setTimeout(type, 400)
-    return () => { cleared = true }
+    return () => {
+      cleared = true
+    }
   }, [qi])
 
   const query = SS_QUERIES[qi]
@@ -1099,7 +1212,10 @@ function SemanticSearch() {
       </p>
       <div
         className="flex items-center gap-2.5 rounded-lg px-3.5 py-2.5"
-        style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+        style={{
+          background: 'rgba(255,255,255,0.05)',
+          border: '1px solid rgba(255,255,255,0.1)',
+        }}
       >
         <svg
           width="13"
@@ -1117,10 +1233,15 @@ function SemanticSearch() {
           {query.text.slice(0, typed)}
           <span
             className="inline-block w-px h-[12px] align-middle ml-px"
-            style={{ backgroundColor: 'var(--primary)', animation: 'ss-blink 1s step-end infinite' }}
+            style={{
+              backgroundColor: 'var(--primary)',
+              animation: 'ss-blink 1s step-end infinite',
+            }}
           />
         </span>
-        <span className="text-[9px] font-mono text-slate-600 shrink-0">ada-002</span>
+        <span className="text-[9px] font-mono text-slate-600 shrink-0">
+          ada-002
+        </span>
       </div>
       <div className="flex flex-col gap-1.5">
         {query.results.slice(0, cards).map((r, i) => (
@@ -1145,7 +1266,9 @@ function SemanticSearch() {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[9px] font-mono text-slate-500 shrink-0">{r.sub}</span>
+              <span className="text-[9px] font-mono text-slate-500 shrink-0">
+                {r.sub}
+              </span>
               <div
                 className="flex-1 h-[2px] rounded-full"
                 style={{ background: 'rgba(255,255,255,0.06)' }}
@@ -1237,15 +1360,19 @@ export function Prototype() {
           <p className="text-xs text-primary font-mono uppercase tracking-widest">
             Hero Section / Prototypes
           </p>
-          <h1 className="text-4xl font-bold tracking-tight text-white" style={{ fontFamily: 'Space Grotesk, system-ui' }}>
+          <h1
+            className="text-4xl font-bold tracking-tight text-white"
+            style={{ fontFamily: 'Space Grotesk, system-ui' }}
+          >
             Graphic Options
           </h1>
           <p className="text-slate-400 text-sm max-w-lg font-mono">
-            Seven interpretations of the vector embedding concept for the hero section.
-            Each is animated; options 1, 3, and 6 are interactive on hover.
+            Seven interpretations of the vector embedding concept for the hero
+            section. Each is animated; options 1, 3, and 6 are interactive on
+            hover.
           </p>
           <nav className="flex gap-5 pt-1">
-            {SECTIONS.map(s => (
+            {SECTIONS.map((s) => (
               <a
                 key={s.id}
                 href={`#${s.id}`}
@@ -1257,7 +1384,7 @@ export function Prototype() {
           </nav>
         </header>
 
-        {SECTIONS.map(s => (
+        {SECTIONS.map((s) => (
           <section key={s.id} id={s.id} className="space-y-6">
             <div className="space-y-1.5 border-l-2 border-primary pl-4">
               <p className="text-xs font-mono text-primary uppercase tracking-widest">
@@ -1269,9 +1396,14 @@ export function Prototype() {
               >
                 {s.title}
               </h2>
-              <p className="text-slate-400 text-sm font-mono max-w-md">{s.description}</p>
+              <p className="text-slate-400 text-sm font-mono max-w-md">
+                {s.description}
+              </p>
             </div>
-            <div className="w-full max-w-[400px] aspect-square rounded-2xl overflow-hidden border border-white/10 relative" style={{ background: 'var(--card)' }}>
+            <div
+              className="w-full max-w-[400px] aspect-square rounded-2xl overflow-hidden border border-white/10 relative"
+              style={{ background: 'var(--card)' }}
+            >
               {s.component}
             </div>
           </section>
