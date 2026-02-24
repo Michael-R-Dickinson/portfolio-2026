@@ -41,7 +41,7 @@ export function Hero() {
         <div className="flex flex-wrap gap-4 pt-4">
           <button className="group relative px-6 py-3 bg-primary text-background-dark font-bold rounded-full overflow-hidden">
             <div className="absolute inset-0 w-full h-full bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
-            <span className="relative flex items-center gap-2 mt-8">
+            <span className="relative flex items-center gap-2">
               <span className="material-symbols-outlined">terminal</span>
               View Projects
             </span>
