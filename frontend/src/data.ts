@@ -1,117 +1,139 @@
 export const navLinks = [
-  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
   { href: '#stack', label: 'Stack' },
   { href: '#roadmap', label: 'Roadmap' },
-  { href: '#projects', label: 'Projects' },
 ]
 
-export const heroBio = `I combine my love for infrastructure, mathematics and ML to build deployable AI systems. Architecting scalable **ML pipelines** & automating intelligence. Currently building the future of AI infrastructure.`
+export const heroBio = `I combine my love for **infrastructure**, **mathematics** and **ML** to build deployable AI systems. Currently leading ground comms software for UBC's autonomous aircraft team.`
 
 export const techCategories = [
   {
     icon: 'memory',
-    title: 'Core ML',
-    skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'XGBoost', 'HuggingFace'],
-  },
-  {
-    icon: 'dns',
-    title: 'Infrastructure',
-    skills: ['Docker', 'Kubernetes', 'Terraform', 'AWS (SageMaker)'],
-  },
-  {
-    icon: 'account_tree',
-    title: 'Ops & Pipeline',
-    skills: ['MLflow', 'Airflow', 'DVC', 'GitHub Actions', 'Jenkins'],
+    title: 'ML & AI',
+    skills: ['PyTorch', 'NumPy', 'Pandas', 'OpenCV', 'scikit-learn'],
   },
   {
     icon: 'terminal',
     title: 'Languages',
-    skills: ['Python', 'Go', 'Bash', 'SQL'],
+    skills: ['Python', 'TypeScript', 'C/C++', 'SQL', 'Java'],
+  },
+  {
+    icon: 'dns',
+    title: 'Infrastructure',
+    skills: ['AWS', 'Docker', 'GitHub Actions CI/CD', 'Git'],
+  },
+  {
+    icon: 'account_tree',
+    title: 'Frameworks & APIs',
+    skills: ['Flask', 'FastAPI', 'PostgreSQL', 'SQLAlchemy'],
   },
 ]
 
 export const experiences = [
   {
-    period: '2023 — Present',
-    location: 'San Francisco, CA',
+    period: 'Sep 2024 — Present',
+    location: 'Vancouver, BC',
     isCurrent: true,
-    role: 'MLOps Engineer Intern',
-    company: 'DataCore Systems',
-    description: `- Implemented a CI/CD pipeline for model retraining using GitHub Actions and AWS SageMaker, reducing deployment time by 40%.
-- Optimized Docker container images for inference services, shrinking image size by 60% and improving cold start times.
-- Collaborated with data scientists to version control datasets using DVC and S3.`,
+    role: 'Ground Communications Software Engineer',
+    company: 'UBC Uncrewed Aircraft Systems',
+    description: `- Led Ground Communications subteam (6 members) to **National 2nd Place** at AEAC 2025
+- Built Pandas + NumPy data pipeline with validation and normalization for 100K+ telemetry data points
+- Deployed low-latency **WebRTC** aerial image streaming for real-time drone feeds during autonomous flight — deployed to AWS with EC2 signaling server and S3 persistence`,
   },
   {
-    period: '2022 — 2023',
-    location: 'Remote',
+    period: 'Jun 2025 — Sep 2025',
+    location: 'Portland, OR',
     isCurrent: false,
-    role: 'Junior Data Engineer',
-    company: 'TechFlow Analytics',
-    description: `- Built ETL pipelines processing 500GB+ daily data using Apache Airflow and PostgreSQL.
-- Developed Python scripts to automate data quality checks, catching 95% of schema anomalies before production.
-- Maintained documentation for data infrastructure and API endpoints.`,
+    role: 'Software Engineering Intern',
+    company: 'DevSwarm',
+    description: `- Built anomaly detection system using statistical analysis and clustering to flag irregular code generation patterns across 10K+ sessions, reducing harmful tool use by 35%
+- Designed agentic workflow engine enabling LLMs to autonomously plan, execute, and validate multi-step coding tasks with tool-use, achieving 78% success rate on complex refactoring operations`,
+  },
+  {
+    period: 'Apr 2023 — Jul 2024',
+    location: 'Eugene, OR',
+    isCurrent: false,
+    role: 'Software Engineer',
+    company: 'Twenty Ideas',
+    description: `- Developed computer vision pipeline using OpenCV and PyTorch for automated truck damage assessment, reducing manual inspection time by 70% and enabling instant repair cost estimates
+- Built financial data ETL pipeline with SQL window-functions and time-series aggregations over 50K+ records with sub-second query latency
+- Reduced QA turnaround times to < 20 minutes/build via GitHub Actions CI/CD pipeline with AWS Fargate + ECS deployments`,
+  },
+  {
+    period: 'Apr 2022 — Sep 2022',
+    location: 'Portland, OR',
+    isCurrent: false,
+    role: 'Data Science Intern',
+    company: 'SheerID',
+    description: `- Leveraged Selenium web scraping to locate 10,000+ students and provide custom promotions — led to 1,000+ conversions for clients including Google and AT&T
+- Used SQLAlchemy + Pandas to scrub Postgres database, removing 300+ redundant user records`,
   },
 ]
 
 export const projects = [
   {
-    title: 'Distributed Training Cluster',
+    title: 'Multimodal Suicide Prevention Research',
     description:
-      'Automated infrastructure for distributed PyTorch training jobs across multiple GPU nodes using Ray and Kubernetes.',
-    tags: ['Kubernetes', 'Ray', 'AWS'],
+      'Novel self-attention architecture fusing BERT with Vision Transformer (ViT) for multimodal (image + text) suicidal ideation detection. Awarded American Psychological Association Achievement Award.',
+    tags: ['PyTorch', 'NumPy', 'OpenCV'],
     href: '#',
-    result: '10x faster iteration',
+    result: '96% accuracy',
     highlight: true,
   },
   {
-    title: 'Model Drift Monitor',
+    title: 'Job Application Automation Platform',
     description:
-      'Real-time drift detection system for deployed models. Integrates with Slack for alerts and triggers automated retraining.',
-    tags: ['Python', 'Prometheus', 'Grafana'],
+      'Browser extension + cloud platform automating job applications with LLM-powered resume tailoring. Uses text-embeddings + cosine similarity for form field classification across 50+ portals.',
+    tags: ['React', 'AWS Lambda', 'Bedrock'],
     href: '#',
-    result: '95% alert accuracy',
+    result: '30+ applications/hour',
     highlight: false,
   },
   {
-    title: 'Sentiment API',
+    title: 'DubHacks 2025 — E2E Test Automation',
     description:
-      'High-throughput REST API for sentiment analysis serving a BERT model. Optimized for < 50ms latency.',
-    tags: ['FastAPI', 'Docker', 'Redis'],
+      'End-to-end testing platform converting natural language to Playwright scripts via OpenAI Agents and MCP. FastAPI backend orchestrates containerized execution of 20+ concurrent jobs with live result streaming.',
+    tags: ['FastAPI', 'Playwright', 'OpenAI'],
     href: '#',
-    result: '< 50ms latency',
+    result: 'sub-60s generation',
     highlight: false,
   },
 ]
 
 export const roadmapNodes = [
   {
-    title: 'B.S. Computer Science',
-    label: 'commit: 2022',
-    description: 'Graduated with Honors. Focus on Distributed Systems and AI.',
+    title: 'UBC Computer Science',
+    label: 'commit: Sep 2022',
+    description:
+      'Enrolled in CS + Honours Mathematics at UBC. Became a Teaching Assistant for CPSC 110 (Systematic Program Design).',
     side: 'left' as const,
     isCurrent: false,
     isFuture: false,
   },
   {
-    title: 'First Cloud Certification',
-    label: 'commit: 2023',
-    description: 'Achieved AWS Solutions Architect Associate.',
+    title: 'First Engineering Roles',
+    label: 'commit: 2022–2024',
+    description:
+      'Data Science intern at SheerID; built CV pipelines and financial ETL systems at Twenty Ideas.',
     side: 'right' as const,
     isCurrent: false,
     isFuture: false,
   },
   {
-    title: 'MLOps Specialization',
+    title: 'Drone Systems & Agentic AI',
     label: 'HEAD -> main',
-    description: 'Mastering Kubernetes, Kubeflow, and scalable inference patterns.',
+    description:
+      'Leading drone ground comms at UBC UAS (National 2nd Place, AEAC 2025). Built agentic workflow engines at DevSwarm.',
     side: 'left' as const,
     isCurrent: true,
     isFuture: false,
   },
   {
-    title: 'LLM Ops Engineering',
-    label: 'branch: feature/llm-ops',
-    description: 'Fine-tuning optimization, Vector DB management, RAG pipelines.',
+    title: 'ML Research & Graduate Studies',
+    label: 'branch: feature/research',
+    description:
+      'Pursuing deeper ML research and graduate studies in AI/ML systems.',
     side: 'right' as const,
     isCurrent: false,
     isFuture: true,
