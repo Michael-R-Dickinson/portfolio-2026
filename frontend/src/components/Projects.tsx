@@ -12,7 +12,9 @@ function ProjectCard({
   return (
     <div
       className={`rounded-lg border bg-card/50 backdrop-blur text-card-foreground shadow-sm p-6 hover:bg-card transition-all duration-300 group hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 border-border hover:border-primary flex flex-col ${
-        highlight ? 'md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2' : ''
+        highlight
+          ? 'md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2'
+          : ''
       }`}
     >
       <div className="flex-1">
@@ -32,7 +34,9 @@ function ProjectCard({
           </a>
         </div>
 
-        <p className={`text-muted-foreground mb-4 ${highlight ? 'text-base' : 'text-sm'}`}>
+        <p
+          className={`text-muted-foreground mb-4 ${highlight ? 'text-base' : 'text-sm'}`}
+        >
           {description}
         </p>
 
@@ -61,7 +65,7 @@ export function Projects() {
     <section id="projects" className="py-20 px-4 bg-card/20">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold text-white tracking-tight mb-10">
-          // FEATURED_DEPLOYMENTS
+          // DEPLOYMENTS
         </h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">

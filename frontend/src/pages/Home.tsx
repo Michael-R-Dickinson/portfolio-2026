@@ -12,10 +12,10 @@ export function Home() {
       <Nav />
       <main className="flex-grow flex flex-col items-center w-full px-6">
         <Hero />
-        <TechStack />
         <Experience />
-        <Roadmap />
         <Projects />
+        <TechStack />
+        <Roadmap />
       </main>
       <Footer />
     </div>
