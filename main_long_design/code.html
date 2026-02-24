@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MLOps Portfolio</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0db9f2",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#101e22",
+                        "surface-dark": "#15252a",
+                        "surface-accent": "#1c3036"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'dot-matrix': 'radial-gradient(circle, #0db9f2 1px, transparent 1px)'
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .dot-matrix-bg {
+            background-color: #101e22;
+            background-image: radial-gradient(#1c3036 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+        
+        .glass-panel {
+            background: rgba(21, 37, 42, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(13, 185, 242, 0.1);
+        }
+
+        .git-node {
+            box-shadow: 0 0 0 4px #101e22; 
+        }
+
+        /* Custom scrollbar for a tech feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101e22; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1c3036; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0db9f2; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Dot Matrix Overlay Wrapper -->
+<div class="dot-matrix-bg min-h-screen w-full flex flex-col">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full glass-panel border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<!-- Logo area -->
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+<span class="material-symbols-outlined text-lg">terminal</span>
+</div>
+<span class="font-bold tracking-tight text-lg dark:text-white">&lt;dev_ops/&gt;</span>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#about">./About</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#stack">./Stack</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#roadmap">./Roadmap</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#projects">./Projects</a>
+</nav>
+<!-- CTA -->
+<div class="flex items-center gap-4">
+<a class="hidden sm:flex items-center justify-center size-8 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors" href="https://github.com" target="_blank">
+<svg aria-hidden="true" class="size-5" fill="currentColor" viewbox="0 0 24 24">
+<path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path>
+</svg>
+</a>
+<button class="flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/50 px-4 py-2 rounded-full text-sm font-bold transition-all hover:shadow-[0_0_15px_rgba(13,185,242,0.3)]">
+<span class="material-symbols-outlined text-sm">mail</span>
+<span>Contact</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center w-full px-6">
+<!-- Hero Section -->
+<section class="w-full max-w-5xl py-20 md:py-32 flex flex-col md:flex-row gap-12 items-center" id="about">
+<div class="flex-1 space-y-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-white/5 text-xs font-mono text-primary animate-pulse">
+<span class="size-2 rounded-full bg-primary"></span>
+<span>System Status: Online</span>
+</div>
+<div class="space-y-4">
+<h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-none text-white">
+                            Hello, World.<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">I'm Alex Chen.</span>
+</h1>
+<p class="text-xl md:text-2xl text-slate-400 font-light max-w-2xl">
+                            Architecting scalable <span class="text-white font-medium">ML pipelines</span> &amp; automating intelligence. Currently building the future of AI infrastructure.
+                        </p>
+</div>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="group relative px-6 py-3 bg-primary text-background-dark font-bold rounded-full overflow-hidden">
+<div class="absolute inset-0 w-full h-full bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
+<span class="relative flex items-center gap-2">
+<span class="material-symbols-outlined">terminal</span>
+                                View Projects
+                            </span>
+</button>
+<button class="px-6 py-3 border border-white/20 text-white font-bold rounded-full hover:bg-white/5 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined">download</span>
+                            Download CV
+                        </button>
+</div>
+</div>
+<!-- Abstract Visual / Image -->
+<div class="w-full md:w-[400px] aspect-square relative group">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-700"></div>
+<div class="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-surface-dark">
+<!-- Code overlay effect -->
+<div class="absolute inset-0 p-6 font-mono text-xs text-primary/30 leading-relaxed overflow-hidden opacity-50 select-none">
+                            def deploy_pipeline(config):<br/>
+                              cluster = connect_k8s()<br/>
+                              model = load_registry(v=2.0)<br/>
+                              if model.validate():<br/>
+                                scale_group.up(nodes=50)<br/>
+                                metrics.push(grafana)<br/>
+<br/>
+                            class NeuralArchitect:<br/>
+                              def __init__(self):<br/>
+                                self.stack = ["Torch", "TF"]<br/>
+                                self.container = "Docker"<br/>
+</div>
+<img alt="Abstract representation of code on a screen representing software development" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60 hover:opacity-80 transition-opacity" data-alt="Abstract representation of code on a screen representing software development" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9_V8RAKGyizc5079mmTP1BCKFUQlTKbNkiWVJ6TmCBNDi7BcCvzjU_7gT-Iq7gqhpzH_haXj97NefuUAB8NIZUvhwNXNvkTvobapGiJ3VmPLKtW3dQUL4zCBE_QXhZzvkNxtaTm_CWPTiBKlTVrVvviFeRfk2QncOKbufawvFbs8ktfus5pP21OojAOWmDsUTP9JYpOMGRWrzFlwhexCY3rvS8M1AxvrZHhdmrWjB9cDG_jL8d4AIn07de1fGeJIhLWkmTVjWt4oQ"/>
+</div>
+</div>
+</section>
+<!-- Technical Stack Grid -->
+<section class="w-full max-w-6xl py-20" id="stack">
+<div class="flex items-center gap-4 mb-10">
+<h2 class="text-3xl font-bold text-white tracking-tight">// TECHNICAL_STACK</h2>
+<div class="h-px bg-white/10 flex-grow"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Category 1 -->
+<div class="p-6 rounded-2xl bg-surface-dark border border-white/5 hover:border-primary/30 transition-all group">
+<div class="flex items-center gap-3 mb-6 text-primary">
+<span class="material-symbols-outlined">memory</span>
+<h3 class="font-bold text-lg text-white">Core ML</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">PyTorch</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">TensorFlow</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Scikit-learn</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">XGBoost</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">HuggingFace</span>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="p-6 rounded-2xl bg-surface-dark border border-white/5 hover:border-primary/30 transition-all group">
+<div class="flex items-center gap-3 mb-6 text-primary">
+<span class="material-symbols-outlined">dns</span>
+<h3 class="font-bold text-lg text-white">Infrastructure</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Docker</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Kubernetes</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Terraform</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">AWS (SageMaker)</span>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="p-6 rounded-2xl bg-surface-dark border border-white/5 hover:border-primary/30 transition-all group">
+<div class="flex items-center gap-3 mb-6 text-primary">
+<span class="material-symbols-outlined">account_tree</span>
+<h3 class="font-bold text-lg text-white">Ops &amp; Pipeline</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">MLflow</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Airflow</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">DVC</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">GitHub Actions</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Jenkins</span>
+</div>
+</div>
+<!-- Category 4 -->
+<div class="p-6 rounded-2xl bg-surface-dark border border-white/5 hover:border-primary/30 transition-all group">
+<div class="flex items-center gap-3 mb-6 text-primary">
+<span class="material-symbols-outlined">terminal</span>
+<h3 class="font-bold text-lg text-white">Languages</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Python</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Go</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">Bash</span>
+<span class="px-3 py-1 rounded-full bg-surface-accent text-sm text-slate-300 border border-white/5">SQL</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Experience Split View -->
+<section class="w-full max-w-5xl py-20" id="experience">
+<div class="flex items-center gap-4 mb-12">
+<h2 class="text-3xl font-bold text-white tracking-tight">// EXPERIENCE_LOG</h2>
+<div class="h-px bg-white/10 flex-grow"></div>
+</div>
+<div class="space-y-12">
+<!-- Role 1 -->
+<div class="flex flex-col md:flex-row gap-6 md:gap-12 group">
+<div class="md:w-1/4 flex-shrink-0">
+<h4 class="text-primary font-bold text-lg">2023 — Present</h4>
+<p class="text-slate-400 text-sm mt-1">San Francisco, CA</p>
+<div class="mt-3 px-3 py-1 inline-block rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono">Current</div>
+</div>
+<div class="md:w-3/4 space-y-4">
+<div>
+<h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">MLOps Engineer Intern</h3>
+<p class="text-lg text-slate-300 font-medium">DataCore Systems</p>
+</div>
+<ul class="list-disc list-outside ml-4 text-slate-400 space-y-2 marker:text-primary">
+<li>Implemented a CI/CD pipeline for model retraining using GitHub Actions and AWS SageMaker, reducing deployment time by 40%.</li>
+<li>Optimized Docker container images for inference services, shrinking image size by 60% and improving cold start times.</li>
+<li>Collaborated with data scientists to version control datasets using DVC and S3.</li>
+</ul>
+</div>
+</div>
+<!-- Divider -->
+<div class="w-full h-px bg-white/5"></div>
+<!-- Role 2 -->
+<div class="flex flex-col md:flex-row gap-6 md:gap-12 group">
+<div class="md:w-1/4 flex-shrink-0">
+<h4 class="text-slate-200 font-bold text-lg">2022 — 2023</h4>
+<p class="text-slate-400 text-sm mt-1">Remote</p>
+</div>
+<div class="md:w-3/4 space-y-4">
+<div>
+<h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Junior Data Engineer</h3>
+<p class="text-lg text-slate-300 font-medium">TechFlow Analytics</p>
+</div>
+<ul class="list-disc list-outside ml-4 text-slate-400 space-y-2 marker:text-primary">
+<li>Built ETL pipelines processing 500GB+ daily data using Apache Airflow and PostgreSQL.</li>
+<li>Developed Python scripts to automate data quality checks, catching 95% of schema anomalies before production.</li>
+<li>Maintained documentation for data infrastructure and API endpoints.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Git Branch Roadmap -->
+<section class="w-full max-w-4xl py-20 relative" id="roadmap">
+<div class="flex items-center gap-4 mb-16 justify-center">
+<div class="h-px bg-white/10 w-24"></div>
+<h2 class="text-3xl font-bold text-white tracking-tight">// CAREER_ROADMAP</h2>
+<div class="h-px bg-white/10 w-24"></div>
+</div>
+<div class="relative pl-8 md:pl-0">
+<!-- Main Branch Line -->
+<div class="absolute left-8 md:left-1/2 top-0 bottom-16 w-1 bg-gradient-to-b from-primary via-primary to-transparent -translate-x-1/2 rounded-full opacity-30"></div>
+<!-- Branch Off Line (Future) -->
+<div class="absolute left-8 md:left-1/2 top-3/4 w-32 h-32 border-l-2 border-b-2 border-dashed border-primary/40 rounded-bl-3xl -translate-x-[2px]"></div>
+<!-- Node 1 -->
+<div class="relative flex flex-col md:flex-row items-center justify-between mb-20 md:mb-32">
+<div class="md:w-[45%] mb-4 md:mb-0 order-2 md:order-1 md:text-right pr-8">
+<h3 class="text-white text-xl font-bold">B.S. Computer Science</h3>
+<p class="text-primary text-sm font-mono mb-2">commit: 2022</p>
+<p class="text-slate-400 text-sm">Graduated with Honors. Focus on Distributed Systems and AI.</p>
+</div>
+<div class="absolute left-0 md:left-1/2 size-4 bg-primary rounded-full git-node -translate-x-[5px] md:-translate-x-1/2 order-1 z-10"></div>
+<div class="md:w-[45%] order-3"></div>
+</div>
+<!-- Node 2 -->
+<div class="relative flex flex-col md:flex-row items-center justify-between mb-20 md:mb-32">
+<div class="md:w-[45%] order-1"></div>
+<div class="absolute left-0 md:left-1/2 size-4 bg-primary rounded-full git-node -translate-x-[5px] md:-translate-x-1/2 z-10"></div>
+<div class="md:w-[45%] mb-4 md:mb-0 order-2 pl-8 text-left">
+<h3 class="text-white text-xl font-bold">First Cloud Certification</h3>
+<p class="text-primary text-sm font-mono mb-2">commit: 2023</p>
+<p class="text-slate-400 text-sm">Achieved AWS Solutions Architect Associate.</p>
+</div>
+</div>
+<!-- Node 3 (Current) -->
+<div class="relative flex flex-col md:flex-row items-center justify-between mb-24">
+<div class="md:w-[45%] mb-4 md:mb-0 order-2 md:order-1 md:text-right pr-8">
+<h3 class="text-white text-xl font-bold">MLOps Specialization</h3>
+<p class="text-primary text-sm font-mono mb-2">HEAD -&gt; main</p>
+<p class="text-slate-400 text-sm">Mastering Kubernetes, Kubeflow, and scalable inference patterns.</p>
+</div>
+<div class="absolute left-0 md:left-1/2 size-6 bg-background-dark border-4 border-primary rounded-full -translate-x-[9px] md:-translate-x-1/2 order-1 z-10 shadow-[0_0_15px_#0db9f2]"></div>
+<div class="md:w-[45%] order-3"></div>
+</div>
+<!-- Node 4 (Future Branch) -->
+<div class="relative flex flex-col md:flex-row items-center justify-between">
+<div class="md:w-[45%] order-1"></div>
+<div class="absolute left-8 md:left-[calc(50%+120px)] top-4 size-4 bg-transparent border-2 border-primary border-dashed rounded-full -translate-x-1/2 z-10"></div>
+<div class="md:w-[45%] mb-4 md:mb-0 order-2 pl-[140px] text-left">
+<h3 class="text-slate-300 text-lg font-bold">LLM Ops Engineering</h3>
+<p class="text-slate-500 text-sm font-mono mb-1">branch: feature/llm-ops</p>
+<p class="text-slate-500 text-sm">Fine-tuning optimization, Vector DB management, RAG pipelines.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Projects Grid -->
+<section class="w-full max-w-7xl py-20" id="projects">
+<div class="flex items-center justify-between gap-4 mb-10 px-2">
+<h2 class="text-3xl font-bold text-white tracking-tight">// FEATURED_DEPLOYMENTS</h2>
+<a class="text-sm font-mono text-primary hover:underline" href="#">View all repos -&gt;</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Project Card 1 -->
+<div class="group bg-surface-dark border border-white/5 rounded-2xl overflow-hidden hover:border-primary/50 transition-all flex flex-col h-full">
+<div class="h-48 w-full bg-surface-accent relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent opacity-80 z-10"></div>
+<img alt="Abstract blockchain digital network visualization" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Abstract blockchain digital network visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkULgfoNdUSvPO5Q3zbZXCSSbv3Mz1rsW54n0jNkg5e__8mjP2EJ_VBuJsc49cdu32YSgURGLaIz4xJVcHkHVUu_pvy3oR3tohI-vJv1ydTB_OSjOxwkd2BZkI_Q1RGChS2uPB_J4Bu9_M4aZ5oFZyzi8QIh6GO180OkHDGe-y3gcO_x0oNqrdIQcWEn6NWWgTrscdmt2yWDlBUmbXHgkQG4rK2p4QjvJt8m-lAy_s6n5pRs6Y1STD2R0ibwxoiYLSkuagcD4Ou9jc"/>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Distributed Training Cluster</h3>
+<a class="text-slate-400 hover:text-white" href="#"><span class="material-symbols-outlined">open_in_new</span></a>
+</div>
+<p class="text-slate-400 text-sm mb-6 flex-grow">
+                                Automated infrastructure for distributed PyTorch training jobs across multiple GPU nodes using Ray and Kubernetes.
+                            </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">Kubernetes</span>
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">Ray</span>
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">AWS</span>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="group bg-surface-dark border border-white/5 rounded-2xl overflow-hidden hover:border-primary/50 transition-all flex flex-col h-full">
+<div class="h-48 w-full bg-surface-accent relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent opacity-80 z-10"></div>
+<img alt="Data analytics dashboard charts on dark screen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Data analytics dashboard charts on dark screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcHZMipbigE-J9ki17SgG1LFyp04ZR8MVrrVYoxoNFUqQBpkr209ZpXl_7ebjF7ZBsxEODip3nNIyUACZcmVtIrqGhplUZay-uhwAm69v1TiFmnlt09tydYHoDq7w25zXHBNCqNzaqQ0Dna2ZU1Fm21h5mQ2dPg8zjY_zNMJy98osJeG8de2bGwYM6ogIIDcMV5ojbrHZtHFD2rQsKUw3n_o29ABOKmL0WU-iq156D_jmhRk18weSfY1aKhlS6sBKr7N432leeTISO"/>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Model Drift Monitor</h3>
+<a class="text-slate-400 hover:text-white" href="#"><span class="material-symbols-outlined">open_in_new</span></a>
+</div>
+<p class="text-slate-400 text-sm mb-6 flex-grow">
+                                Real-time drift detection system for deployed models. Integrates with Slack for alerts and triggers automated retraining.
+                            </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">Python</span>
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">Prometheus</span>
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">Grafana</span>
+</div>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="group bg-surface-dark border border-white/5 rounded-2xl overflow-hidden hover:border-primary/50 transition-all flex flex-col h-full">
+<div class="h-48 w-full bg-surface-accent relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark to-transparent opacity-80 z-10"></div>
+<img alt="Abstract geometric neural network nodes connection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Abstract geometric neural network nodes connection" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-e1QcMEHYYt56AeMlkZdNb_M6wtdflYvV-ymywG0uLXvDQ38xD1bTcGdDK81fK7exjUguXm_p9J_Wu21LG26QPgBxNPrG7uz8oyfkGxERoH-Z-vPLDzeTkCteA3e-cvc4y4Fo6_hT0Mjd36ZOVdZlbkV0X3KdxeXE0xYFIvwIiHdC3SbFlXTHTbpBEKQHeGcKnrwswLrJM3pw8QYLkxOxiv8yOwuIpsWE66fJvk3rJD5V8_TfQ-Y4c8snHZdYF5VZ61ZueBvSIRgi"/>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Sentiment API</h3>
+<a class="text-slate-400 hover:text-white" href="#"><span class="material-symbols-outlined">open_in_new</span></a>
+</div>
+<p class="text-slate-400 text-sm mb-6 flex-grow">
+                                High-throughput REST API for sentiment analysis serving a BERT model. Optimized for &lt; 50ms latency.
+                            </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">FastAPI</span>
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">Docker</span>
+<span class="text-xs font-mono px-2 py-1 rounded bg-surface-accent text-primary border border-primary/20">Redis</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full border-t border-white/5 bg-surface-dark mt-auto">
+<div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 text-sm">© 2024 Alex Chen. MIT License.</p>
+<div class="flex gap-6">
+<a class="text-slate-500 hover:text-primary text-sm font-medium" href="#">GitHub</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium" href="#">LinkedIn</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium" href="#">Twitter</a>
+</div>
+<div class="text-xs text-slate-600 font-mono">
+                    System: Online <span class="text-green-500">●</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>
