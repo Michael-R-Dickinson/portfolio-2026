@@ -102,7 +102,7 @@ export default RoadmapNode
 
 export function Roadmap() {
   return (
-    <section id="roadmap" className="w-full max-w-4xl py-20 relative">
+    <section id="roadmap" className="hidden md:block w-full max-w-4xl py-20 relative">
       <div className="flex items-center gap-4 mb-16 justify-center">
         <div className="h-px bg-white/10 w-24" />
         <h2 className="text-3xl font-bold text-white tracking-tight">
