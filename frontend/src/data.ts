@@ -47,8 +47,8 @@ export const experiences = [
     role: 'Ground Communications Software Engineer',
     company: 'UBC Uncrewed Aircraft Systems',
     description: `- Led Ground Communications subteam (6 members) to **National 2nd Place** at AEAC 2025
-- Built Pandas + NumPy data pipeline with validation and normalization for 100K+ telemetry data points
-- Deployed low-latency **WebRTC** aerial image streaming for real-time drone feeds during autonomous flight — deployed to AWS with EC2 signaling server and S3 persistence`,
+- Deployed low-latency **WebRTC** aerial image streaming for real-time drone feeds during autonomous flight — deployed to AWS with EC2 signaling server and S3 persistence
+- Built Pandas + NumPy data pipeline with validation and normalization for 100K+ telemetry data points`,
   },
   {
     period: 'Jun 2025 — Sep 2025',
