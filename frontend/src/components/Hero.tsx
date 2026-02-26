@@ -55,7 +55,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="w-full md:w-[500px] aspect-square relative group">
+      <div className="hidden md:block w-full md:w-[500px] aspect-square relative group">
         <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-700" />
         <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-surface-dark flex items-center justify-center">
           <ForceIndex />

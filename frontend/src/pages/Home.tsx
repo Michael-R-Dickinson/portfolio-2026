@@ -15,7 +15,9 @@ export function Home() {
         <Experience />
         <Projects />
         <TechStack />
-        <Roadmap />
+        <div className="hidden md:block w-full">
+          <Roadmap />
+        </div>
       </main>
       <Footer />
     </div>

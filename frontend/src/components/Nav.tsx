@@ -8,7 +8,9 @@ export function Nav() {
           <a
             key={href}
             href={href}
-            className="text-sm font-medium text-slate-400 hover:text-primary transition-colors"
+            className={`text-sm font-medium text-slate-400 hover:text-primary transition-colors${
+              href === '#roadmap' ? ' hidden md:inline' : ''
+            }`}
           >
             {label}
           </a>

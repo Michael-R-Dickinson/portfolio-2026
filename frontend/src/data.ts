@@ -21,12 +21,21 @@ export const techCategories = [
   {
     icon: 'dns',
     title: 'Infrastructure',
-    skills: ['AWS', 'Docker', 'GitHub Actions CI/CD', 'Git'],
+    skills: ['AWS', 'Docker', 'Docker Compose', 'GitHub Actions CI/CD'],
   },
   {
     icon: 'account_tree',
-    title: 'Frameworks & APIs',
-    skills: ['Flask', 'FastAPI', 'PostgreSQL', 'SQLAlchemy'],
+    title: 'Frameworks',
+    skills: [
+      'React.js',
+      'Flask',
+      'Django',
+      'FastAPI',
+      'PostgreSQL',
+      'Git',
+      'Playwright',
+      'Jest',
+    ],
   },
 ]
 
