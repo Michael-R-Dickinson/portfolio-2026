@@ -79,24 +79,23 @@ export const experiences = [
 - Used SQLAlchemy + Pandas to scrub Postgres database, removing 300+ redundant user records`,
   },
 ]
+type Project = {
+  title: string
+  description: string
+  tags: string[]
+  href: string
+  result?: string
+  highlight?: boolean
+}
 
-export const projects = [
-  {
-    title: 'Multimodal Suicide Prevention Research',
-    description:
-      'Novel self-attention architecture fusing BERT with Vision Transformer (ViT) for multimodal (image + text) suicidal ideation detection. Awarded American Psychological Association Achievement Award.',
-    tags: ['PyTorch', 'NumPy', 'OpenCV'],
-    href: '#',
-    result: '96% accuracy',
-    highlight: true,
-  },
+export const projects: Project[] = [
   {
     title: 'Job Application Automation Platform',
     description:
       'Browser extension + cloud platform automating job applications with LLM-powered resume tailoring. Uses text-embeddings + cosine similarity for form field classification across 50+ portals.',
     tags: ['React', 'AWS Lambda', 'Bedrock'],
     href: 'https://github.com/Michael-R-Dickinson/job-search-helper',
-    result: '30+ applications/hour',
+    // result: '30+ applications/hour',
     highlight: false,
   },
   {
@@ -105,7 +104,22 @@ export const projects = [
       'End-to-end testing platform converting natural language to Playwright scripts via OpenAI Agents and MCP. FastAPI backend orchestrates containerized execution of 20+ concurrent jobs with live result streaming.',
     tags: ['FastAPI', 'Playwright', 'OpenAI'],
     href: 'https://github.com/costasvallejos/FasTest',
-    result: 'sub-60s generation',
+    // result: 'sub-60s generation',
+    highlight: false,
+  },
+  {
+    title: 'Personal Portfolio Website',
+    description:
+      'This website! \n\nBuilt with React, Tailwind CSS, and Vite and deployed to AWS S3 + CloudFront.',
+    tags: ['React', 'Tailwind CSS', 'AWS S3'],
+    href: 'https://github.com/Michael-R-Dickinson/portfolio-2026',
+  },
+  {
+    title: 'Tabletop Poker',
+    description:
+      'An app for playing in-person poker without physical chips. Connects players peer-to-peer with WebRTC for low-latency gameplay. Deployed with Terraform-managed AWS Lambda + API Gateway backend',
+    tags: ['WebRTC', 'Terraform', 'AWS Lambda + API Gateway', 'React Native'],
+    href: 'https://github.com/Michael-R-Dickinson/table-poker',
     highlight: false,
   },
 ]

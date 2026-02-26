@@ -50,10 +50,12 @@ function ProjectCard({
           {description}
         </ReactMarkdown>
 
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4">
-          <TrendingUp className="w-4 h-4" />
-          {result}
-        </div>
+        {result && (
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4">
+            <TrendingUp className="w-4 h-4" />
+            {result}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-wrap gap-2 mt-4">
