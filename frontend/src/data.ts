@@ -95,7 +95,7 @@ export const projects = [
     description:
       'Browser extension + cloud platform automating job applications with LLM-powered resume tailoring. Uses text-embeddings + cosine similarity for form field classification across 50+ portals.',
     tags: ['React', 'AWS Lambda', 'Bedrock'],
-    href: '#',
+    href: 'https://github.com/Michael-R-Dickinson/job-search-helper',
     result: '30+ applications/hour',
     highlight: false,
   },
@@ -104,7 +104,7 @@ export const projects = [
     description:
       'End-to-end testing platform converting natural language to Playwright scripts via OpenAI Agents and MCP. FastAPI backend orchestrates containerized execution of 20+ concurrent jobs with live result streaming.',
     tags: ['FastAPI', 'Playwright', 'OpenAI'],
-    href: '#',
+    href: 'https://github.com/costasvallejos/FasTest',
     result: 'sub-60s generation',
     highlight: false,
   },

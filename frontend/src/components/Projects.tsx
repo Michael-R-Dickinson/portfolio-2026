@@ -28,6 +28,7 @@ function ProjectCard({
             {title}
           </h3>
           <a
+            target="_blank"
             href={href}
             className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 ml-2"
           >
