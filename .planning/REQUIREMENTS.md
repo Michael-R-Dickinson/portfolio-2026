@@ -15,9 +15,9 @@
 
 ### Deployment
 
-- [ ] **DEPLOY-01**: `tofu apply` triggers `pnpm build` via `local-exec` before syncing files
-- [ ] **DEPLOY-02**: Built `dist/` contents synced to S3 via `aws s3 sync` in `local-exec`
-- [ ] **DEPLOY-03**: CloudFront invalidation (`/*`) triggered after sync so changes are immediately live
+- [x] **DEPLOY-01**: `tofu apply` triggers `pnpm build` via `local-exec` before syncing files
+- [x] **DEPLOY-02**: Built `dist/` contents synced to S3 via `aws s3 sync` in `local-exec`
+- [x] **DEPLOY-03**: CloudFront invalidation (`/*`) triggered after sync so changes are immediately live
 
 ### Outputs
 
@@ -55,9 +55,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INFRA-03 | Phase 1 | Complete |
 | INFRA-04 | Phase 1 | Complete |
 | INFRA-05 | Phase 1 | Complete |
-| DEPLOY-01 | Phase 2 | Pending |
-| DEPLOY-02 | Phase 2 | Pending |
-| DEPLOY-03 | Phase 2 | Pending |
+| DEPLOY-01 | Phase 2 | Complete |
+| DEPLOY-02 | Phase 2 | Complete |
+| DEPLOY-03 | Phase 2 | Complete |
 | OUTPUT-01 | Phase 1 | Complete |
 
 **Coverage:**
