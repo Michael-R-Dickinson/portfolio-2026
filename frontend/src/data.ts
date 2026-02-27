@@ -164,7 +164,7 @@ export const roadmapNodes: RoadmapNode[] = [
     title: 'Enrolled in UBC Computer Science',
     label: 'Sep 2024',
     description:
-      'Enrolled in CS + Honours Mathematics at UBC. \n\nBecame a Teaching Assistant for CPSC 110 (Systematic Program Design).',
+      'Enrolled in CS + Honours Mathematics at UBC. \n\nBecame a Teaching Assistant for CPSC 110.\n\n4.3/4.33 GPA',
     side: 'right',
     isCurrent: false,
     isFuture: false,
