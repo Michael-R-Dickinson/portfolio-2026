@@ -12,7 +12,7 @@ Two phases deliver the core value: first provision the AWS infrastructure (S3, C
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Infrastructure** - Provision S3, CloudFront, OAC, bucket policy, and expose the distribution URL
+- [x] **Phase 1: Infrastructure** - Provision S3, CloudFront, OAC, bucket policy, and expose the distribution URL
 - [ ] **Phase 2: Deployment** - Wire `tofu apply` to build the frontend and sync it to S3, then invalidate CloudFront cache
 
 ## Phase Details
@@ -29,7 +29,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — S3 bucket (private), OAC, bucket policy, CloudFront distribution with SPA routing, and cloudfront_url output
+- [x] 01-01-PLAN.md — S3 bucket (private), OAC, bucket policy, CloudFront distribution with SPA routing, and cloudfront_url output
 
 ### Phase 2: Deployment
 **Goal**: `tofu apply` builds the frontend and syncs it to S3 so the live site reflects the current source — no separate deploy step
@@ -51,5 +51,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Infrastructure | 0/1 | Not started | - |
+| 1. Infrastructure | 1/1 | Complete | 2026-02-26 |
 | 2. Deployment | 0/1 | Not started | - |

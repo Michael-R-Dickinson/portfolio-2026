@@ -7,11 +7,11 @@
 
 ### Infrastructure
 
-- [ ] **INFRA-01**: S3 bucket provisioned with static website hosting disabled (private, OAC access only)
-- [ ] **INFRA-02**: CloudFront Origin Access Control (OAC) configured to allow CloudFront to read from S3
-- [ ] **INFRA-03**: CloudFront distribution created with S3 as origin, default root object `index.html`
-- [ ] **INFRA-04**: CloudFront distribution configured to return `index.html` for all 404/403 errors (SPA routing support)
-- [ ] **INFRA-05**: S3 bucket policy grants read access to CloudFront OAC only
+- [x] **INFRA-01**: S3 bucket provisioned with static website hosting disabled (private, OAC access only)
+- [x] **INFRA-02**: CloudFront Origin Access Control (OAC) configured to allow CloudFront to read from S3
+- [x] **INFRA-03**: CloudFront distribution created with S3 as origin, default root object `index.html`
+- [x] **INFRA-04**: CloudFront distribution configured to return `index.html` for all 404/403 errors (SPA routing support)
+- [x] **INFRA-05**: S3 bucket policy grants read access to CloudFront OAC only
 
 ### Deployment
 
@@ -21,7 +21,7 @@
 
 ### Outputs
 
-- [ ] **OUTPUT-01**: `tofu output` exposes the CloudFront distribution URL after apply
+- [x] **OUTPUT-01**: `tofu output` exposes the CloudFront distribution URL after apply
 
 ## v2 Requirements
 
@@ -50,15 +50,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 1 | Pending |
-| INFRA-02 | Phase 1 | Pending |
-| INFRA-03 | Phase 1 | Pending |
-| INFRA-04 | Phase 1 | Pending |
-| INFRA-05 | Phase 1 | Pending |
+| INFRA-01 | Phase 1 | Complete |
+| INFRA-02 | Phase 1 | Complete |
+| INFRA-03 | Phase 1 | Complete |
+| INFRA-04 | Phase 1 | Complete |
+| INFRA-05 | Phase 1 | Complete |
 | DEPLOY-01 | Phase 2 | Pending |
 | DEPLOY-02 | Phase 2 | Pending |
 | DEPLOY-03 | Phase 2 | Pending |
-| OUTPUT-01 | Phase 1 | Pending |
+| OUTPUT-01 | Phase 1 | Complete |
 
 **Coverage:**
 - v1 requirements: 9 total

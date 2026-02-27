@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-02-26)
 ## Current Position
 
 Phase: 1 of 2 (Infrastructure)
-Plan: 0 of 1 in current phase
-Status: Ready to plan
-Last activity: 2026-02-26 — Roadmap created
+Plan: 1 of 1 in current phase
+Status: Phase 1 complete
+Last activity: 2026-02-26 — Completed 01-01-PLAN.md (AWS S3 + CloudFront infrastructure)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [##########] 50%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: -
+- Total plans completed: 1
+- Average duration: 8 min
+- Total execution time: 8 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-infrastructure | 1 | 8 min | 8 min |
 
 **Recent Trend:**
-- Last 5 plans: -
+- Last 5 plans: 8 min
 - Trend: -
 
 *Updated after each plan completion*
@@ -45,6 +45,10 @@ Recent decisions affecting current work:
 - S3 bucket stays private — CloudFront OAC handles access
 - local-exec chosen for build + sync so `tofu apply` is the single deploy command
 - Single environment — no staging
+- OAC used (not deprecated OAI) for CloudFront S3 origin access
+- PriceClass_100 chosen (US/Canada/Europe) — cheapest CloudFront tier
+- error_caching_min_ttl = 0 on SPA error responses — avoids stale redirect caching in dev
+- Tasks 1+2 committed together: cross-file reference (s3.tf -> cloudfront.tf) requires both files for valid configuration
 
 ### Pending Todos
 
@@ -57,5 +61,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-26
-Stopped at: Roadmap created, ready to plan Phase 1
+Stopped at: Completed 01-01-PLAN.md — AWS infrastructure (S3 + CloudFront OAC) provisioned via OpenTofu
 Resume file: None
