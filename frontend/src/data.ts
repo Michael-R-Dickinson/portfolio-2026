@@ -122,6 +122,13 @@ export const projects: Project[] = [
     href: 'https://github.com/Michael-R-Dickinson/table-poker',
     highlight: false,
   },
+  {
+    title: 'Interactive History Map',
+    description:
+      'An interactive map of architecturally significant locations around the world. Built with React and Maplibre GL.',
+    tags: ['React', 'Maplibre', 'Github Pages'],
+    href: 'https://github.com/Michael-R-Dickinson/interactive-history-map',
+  },
 ]
 
 type RoadmapNode = {
