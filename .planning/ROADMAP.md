@@ -26,10 +26,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. A CloudFront distribution exists with the S3 bucket as origin, protected by OAC
   3. CloudFront returns `index.html` for both the root path and any unknown paths (SPA routing)
   4. `tofu output` prints the CloudFront distribution URL
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: S3 bucket, OAC, bucket policy, and CloudFront distribution
+- [ ] 01-01-PLAN.md — S3 bucket (private), OAC, bucket policy, CloudFront distribution with SPA routing, and cloudfront_url output
 
 ### Phase 2: Deployment
 **Goal**: `tofu apply` builds the frontend and syncs it to S3 so the live site reflects the current source — no separate deploy step
