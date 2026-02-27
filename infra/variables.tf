@@ -7,5 +7,5 @@ variable "aws_region" {
 variable "bucket_name" {
   description = "Name of the S3 bucket for the portfolio site"
   type        = string
-  default     = "portfolio-site-static-assets"
+  default     = "portfolio-site-static-assets-mrd-2026"
 }
