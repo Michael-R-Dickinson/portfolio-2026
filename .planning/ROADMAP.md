@@ -39,10 +39,10 @@ Plans:
   1. Running `tofu apply` triggers `pnpm build` before any file sync
   2. Built `dist/` contents appear in the S3 bucket after apply
   3. Visiting the CloudFront URL after apply shows the current version of the site with no cache delay
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 02-01: local-exec build, S3 sync, and CloudFront invalidation
+- [ ] 02-01-PLAN.md — null_resource with local-exec chain: pnpm build, aws s3 sync --delete, CloudFront invalidation /*
 
 ## Progress
 
