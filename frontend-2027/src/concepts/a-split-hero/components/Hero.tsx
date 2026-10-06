@@ -1,4 +1,4 @@
-import { links, profile } from '../content'
+import { links, profile } from '../../../content'
 import { heroPhoto } from '../photo'
 
 const heroLinks = links.filter((l) => ['GitHub', 'LinkedIn', 'Resume'].includes(l.label))

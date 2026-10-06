@@ -1,4 +1,4 @@
-import { projects, type Project } from '../content'
+import { projects, type Project } from '../../../content'
 
 const PICKS = ['livenexus', 'uas', 'bert-vit', 'gcom']
 const KIND_LABEL: Record<Project['kind'], string> = {

@@ -1,0 +1,533 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter+Tight:wght@400;500;600&display=swap');
+
+/* Every rule is scoped under .concept-a */
+.concept-a {
+  --a-paper: #f7f5f0;
+  --a-ink: #18181a;
+  --a-ink-2: #4a4a4f;
+  --a-ink-3: #8a8a90;
+  --a-rule: #dedad1;
+  --a-accent: #1d3b63;
+  --a-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --a-sans: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+
+  min-height: 100vh;
+  background: var(--a-paper);
+  color: var(--a-ink);
+  font-family: var(--a-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.concept-a a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.concept-a .a-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--a-ink-3);
+}
+
+/* ---------- Hero ---------- */
+.concept-a .a-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  /* The photo column is 2/3 of the width, so capping the height at 50vw keeps the
+     pane at least 4:3 (the photo's ratio): `cover` then only ever crops top/bottom.
+     The row still grows if the bio needs more room; see the container query below. */
+  min-height: min(100vh, 50vw, 1100px);
+  min-height: min(100svh, 50vw, 1100px);
+}
+
+.concept-a .a-hero__bio {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2.5rem;
+  padding: clamp(1.75rem, 3.5vw, 3.5rem);
+  border-right: 1px solid var(--a-rule);
+}
+
+.concept-a .a-hero__name {
+  font-family: var(--a-serif);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 4.4vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem;
+}
+
+.concept-a .a-hero__lede {
+  font-family: var(--a-serif);
+  font-size: clamp(1.15rem, 1.45vw, 1.4rem);
+  line-height: 1.4;
+  color: var(--a-ink-2);
+  max-width: 26ch;
+  margin: 0 0 2rem;
+}
+
+.concept-a .a-hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.concept-a .a-hero__links a {
+  display: inline-flex;
+  gap: 0.3em;
+  border-bottom: 1px solid var(--a-ink);
+  padding-bottom: 1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.concept-a .a-hero__links a span {
+  font-size: 0.8em;
+  color: var(--a-ink-3);
+}
+
+.concept-a .a-hero__links a:hover {
+  color: var(--a-accent);
+  border-color: var(--a-accent);
+}
+
+.concept-a .a-hero__meta {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--a-ink-2);
+}
+
+.concept-a .a-hero__meta dt {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--a-ink-3);
+  margin-bottom: 0.35rem;
+}
+
+.concept-a .a-hero__meta dd {
+  margin: 0;
+  max-width: 34ch;
+}
+
+.concept-a .a-hero__meta .is-now dd {
+  position: relative;
+  padding-left: 0.9rem;
+}
+
+.concept-a .a-hero__meta .is-now dd::before {
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--a-accent);
+}
+
+.concept-a .a-hero__photo {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: #cfd2cc;
+  container-type: size;
+}
+
+.concept-a .a-hero__photo img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Never crop horizontally: if the pane ends up taller than 4:3 (bio forced the row
+   taller), show the full width and let the background fill above/below. */
+@container (max-aspect-ratio: 4/3) {
+  .concept-a .a-hero__photo img {
+    object-fit: contain;
+  }
+}
+
+.concept-a .a-hero__photo figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 0.6rem 1rem;
+  font-size: 0.75rem;
+  color: #fff;
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- Sections ---------- */
+.concept-a .a-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.concept-a .a-section {
+  padding: clamp(4rem, 9vw, 7.5rem) 0 0;
+}
+
+.concept-a .a-section__head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--a-ink);
+}
+
+.concept-a .a-section__head h2 {
+  font-family: var(--a-serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.concept-a .a-section__num {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--a-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Tags ---------- */
+.concept-a .a-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.concept-a .a-tags li {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--a-ink-2);
+  border: 1px solid var(--a-rule);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  background: #fff;
+}
+
+/* ---------- Projects ---------- */
+.concept-a .a-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--a-rule);
+  border-left: 1px solid var(--a-rule);
+}
+
+.concept-a .a-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-right: 1px solid var(--a-rule);
+  border-bottom: 1px solid var(--a-rule);
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.concept-a .a-card:hover {
+  background: #fff;
+}
+
+.concept-a .a-card__kicker {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--a-accent);
+}
+
+.concept-a .a-card__kicker span {
+  color: var(--a-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.concept-a .a-card__title {
+  font-family: var(--a-serif);
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+}
+
+.concept-a .a-card__title a:hover {
+  color: var(--a-accent);
+}
+
+.concept-a .a-card__title a span {
+  font-size: 0.7em;
+  color: var(--a-ink-3);
+}
+
+.concept-a .a-card__sub {
+  font-family: var(--a-serif);
+  font-style: italic;
+  color: var(--a-ink-2);
+  margin: 0 0 1rem;
+}
+
+.concept-a .a-card__desc {
+  font-size: 0.93rem;
+  color: var(--a-ink-2);
+  margin: 0 0 1rem;
+}
+
+.concept-a .a-card__hl {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  font-size: 0.85rem;
+  color: var(--a-ink-2);
+}
+
+.concept-a .a-card__hl li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.concept-a .a-card__hl li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--a-ink-3);
+}
+
+.concept-a .a-card .a-tags {
+  margin-top: auto;
+}
+
+/* ---------- Timeline ---------- */
+.concept-a .a-tl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.concept-a .a-tl__item {
+  --dot: 11px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 5rem 2.5rem minmax(0, 1fr);
+  padding-bottom: 2.5rem;
+}
+
+/* the vertical line, drawn per item so future items can switch to dashed */
+.concept-a .a-tl__item::before {
+  content: '';
+  position: absolute;
+  left: calc(5rem + 1.25rem - 0.5px);
+  top: 0.55rem;
+  bottom: -0.55rem;
+  border-left: 1px solid var(--a-ink);
+}
+
+.concept-a .a-tl__item:last-child::before {
+  display: none;
+}
+
+.concept-a .a-tl__item.is-future::before,
+.concept-a .a-tl__item:has(+ .is-future)::before {
+  border-left: 1px dashed var(--a-ink-3);
+}
+
+.concept-a .a-tl__year {
+  font-family: var(--a-serif);
+  font-size: 1.25rem;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.concept-a .a-tl__dot {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  width: var(--dot);
+  height: var(--dot);
+  margin-top: 0.4rem;
+  border-radius: 50%;
+  background: var(--a-ink);
+  box-shadow: 0 0 0 4px var(--a-paper);
+}
+
+.concept-a .is-current .a-tl__dot {
+  background: var(--a-accent);
+  box-shadow:
+    0 0 0 4px var(--a-paper),
+    0 0 0 5px var(--a-accent);
+}
+
+.concept-a .is-future .a-tl__dot {
+  background: var(--a-paper);
+  border: 1px dashed var(--a-ink-3);
+}
+
+.concept-a .a-tl__date {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.2rem;
+  font-size: 0.8rem;
+  color: var(--a-ink-3);
+}
+
+.concept-a .a-tl__badge {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--a-accent);
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  padding: 0 0.35rem;
+}
+
+.concept-a .is-future .a-tl__badge {
+  color: var(--a-ink-3);
+  border-style: dashed;
+}
+
+.concept-a .a-tl__title {
+  font-family: var(--a-serif);
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.25;
+  margin: 0 0 0.35rem;
+}
+
+.concept-a .a-tl__org {
+  font-weight: 400;
+  color: var(--a-ink-2);
+}
+
+.concept-a .a-tl__desc {
+  max-width: 62ch;
+  font-size: 0.93rem;
+  color: var(--a-ink-2);
+  margin: 0 0 0.75rem;
+}
+
+.concept-a .is-future .a-tl__year,
+.concept-a .is-future .a-tl__title,
+.concept-a .is-future .a-tl__org,
+.concept-a .is-future .a-tl__desc {
+  color: var(--a-ink-3);
+}
+
+.concept-a .is-future .a-tags li {
+  background: transparent;
+  border-style: dashed;
+  color: var(--a-ink-3);
+}
+
+/* ---------- Footer ---------- */
+.concept-a .a-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+  border-top: 1px solid var(--a-rule);
+  font-size: 0.85rem;
+  color: var(--a-ink-3);
+}
+
+.concept-a .a-footer nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.concept-a .a-footer a:hover {
+  color: var(--a-ink);
+}
+
+/* ---------- Responsive ---------- */
+/* Stack the hero on phones and on portrait-ish screens: a tall, narrow photo pane
+   can't keep both the drone (centre) and the user (back row, right) in frame. */
+@media (max-width: 760px), (max-aspect-ratio: 5/4) {
+  .concept-a .a-hero {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .concept-a .a-hero__bio {
+    border-right: 0;
+    gap: 2rem;
+    padding: clamp(1.5rem, 5vw, 3rem) clamp(1.25rem, 4vw, 3rem) 2rem;
+  }
+
+  .concept-a .a-hero__photo {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (min-width: 761px) and (max-aspect-ratio: 5/4) {
+  .concept-a .a-hero__bio {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: end;
+  }
+
+  .concept-a .a-hero__bio .a-eyebrow {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .concept-a .a-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .concept-a .a-tl__item {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+  }
+
+  .concept-a .a-tl__item::before {
+    left: calc(0.75rem - 0.5px);
+  }
+
+  .concept-a .a-tl__year {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 1rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .concept-a .a-tl__dot {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .concept-a .a-tl__body {
+    grid-column: 2;
+  }
+}

@@ -1,0 +1,578 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+/* Concept C: terminal / monospace. Every rule scoped under .concept-c */
+.concept-c {
+  --ct-bg: #131615;
+  --ct-bg-2: #191d1b;
+  --ct-line: #2a302d;
+  --ct-fg: #d3d8d3;
+  --ct-fg-2: #a9b0aa;
+  --ct-dim: #7a827c;
+  --ct-faint: #525a55;
+  --ct-green: #93c08c; /* accent 1 */
+  --ct-amber: #d8ae66; /* accent 2 */
+
+  --ct-lane0: #a9b0aa;
+  --ct-lane1: var(--ct-amber);
+  --ct-lane2: var(--ct-green);
+  --ct-lane3: #7a827c;
+
+  --ct-fs: 15px;
+  --ct-lh: 24px;
+  --ct-lw: 22px; /* graph lane width */
+  --ct-fork: 14px; /* extra vertical room for a branch-off curve */
+  --ct-fork-lead: 20px; /* curve starts this far up, inside the previous row's gap */
+
+  min-height: 100vh;
+  background: var(--ct-bg);
+  color: var(--ct-fg);
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--ct-fs);
+  line-height: var(--ct-lh);
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.concept-c ::selection {
+  background: #3b4a3a;
+  color: var(--ct-fg);
+}
+
+.concept-c a {
+  color: var(--ct-green);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ct-green) 35%, transparent);
+  text-underline-offset: 3px;
+}
+.concept-c a:hover {
+  text-decoration-color: var(--ct-green);
+}
+.concept-c a:focus-visible {
+  outline: 1px solid var(--ct-amber);
+  outline-offset: 2px;
+}
+
+.concept-c .ct-dim {
+  color: var(--ct-dim);
+}
+
+/* ---------- layout ---------- */
+.concept-c .ct-main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+.concept-c .ct-section {
+  padding-top: 24px;
+  scroll-margin-top: 48px;
+}
+.concept-c .ct-section + .ct-section {
+  margin-top: 72px;
+  border-top: 1px dashed var(--ct-line);
+  padding-top: 48px;
+}
+
+/* ---------- status bar (tmux-ish) ---------- */
+.concept-c .ct-status {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 32px;
+  padding: 0 16px;
+  background: var(--ct-bg-2);
+  border-bottom: 1px solid var(--ct-line);
+  font-size: 13px;
+  color: var(--ct-dim);
+}
+.concept-c .ct-status ul {
+  display: flex;
+  gap: 4px;
+}
+.concept-c .ct-status a {
+  display: block;
+  padding: 0 8px;
+  color: var(--ct-dim);
+  text-decoration: none;
+}
+.concept-c .ct-status a:hover {
+  color: var(--ct-fg);
+}
+.concept-c .ct-status a.is-active {
+  background: var(--ct-green);
+  color: var(--ct-bg);
+}
+.concept-c .ct-status-session {
+  color: var(--ct-green);
+}
+.concept-c .ct-status-right {
+  margin-left: auto;
+}
+
+/* ---------- prompt ---------- */
+.concept-c .ct-prompt {
+  font-size: var(--ct-fs);
+  font-weight: 500;
+  line-height: var(--ct-lh);
+  margin: 28px 0 8px;
+  overflow-wrap: anywhere;
+}
+.concept-c .ct-section > .ct-prompt:first-child {
+  margin-top: 0;
+}
+.concept-c .ct-prompt-host {
+  color: var(--ct-green);
+}
+.concept-c .ct-prompt-sep {
+  color: var(--ct-dim);
+}
+.concept-c .ct-prompt-cmd {
+  color: var(--ct-fg);
+}
+.concept-c .ct-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: -0.2em;
+  background: var(--ct-fg-2);
+  animation: ct-blink 1.1s steps(1) infinite;
+}
+@keyframes ct-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .concept-c .ct-cursor {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* command output is indented slightly from the prompt */
+.concept-c .ct-out {
+  padding-left: 2ch;
+}
+
+/* ---------- about ---------- */
+.concept-c .ct-name {
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ct-fg);
+  margin: 12px 0 14px;
+}
+.concept-c .ct-bio {
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--ct-fg-2);
+  max-width: 60ch;
+}
+.concept-c .ct-kv {
+  margin-top: 20px;
+  display: grid;
+  gap: 2px;
+}
+.concept-c .ct-kv-row {
+  display: grid;
+  grid-template-columns: 10ch 1fr;
+}
+.concept-c .ct-kv dt {
+  color: var(--ct-amber);
+}
+.concept-c .ct-kv dt::after {
+  content: ':';
+  color: var(--ct-faint);
+}
+.concept-c .ct-kv dd {
+  color: var(--ct-fg-2);
+}
+.concept-c .ct-prose {
+  color: var(--ct-fg-2);
+  max-width: 68ch;
+}
+.concept-c .ct-prose p + p {
+  margin-top: 10px;
+}
+.concept-c .ct-about-split {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0 40px;
+}
+.concept-c .ct-current li {
+  color: var(--ct-fg-2);
+}
+.concept-c .ct-ok {
+  color: var(--ct-green);
+  font-size: 0.8em;
+}
+.concept-c .ct-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 3ch;
+}
+
+/* ---------- projects ---------- */
+.concept-c .ct-ls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 3ch;
+}
+.concept-c .ct-ls a {
+  color: #8fb3c9;
+  text-decoration-color: transparent;
+  font-weight: 500;
+}
+.concept-c .ct-ls a:hover {
+  text-decoration-color: currentColor;
+}
+.concept-c .ct-projects {
+  display: grid;
+  gap: 20px;
+  margin-top: 4px;
+}
+.concept-c .ct-project {
+  border-left: 1px solid var(--ct-line);
+  padding: 2px 0 4px 2ch;
+  scroll-margin-top: 56px;
+}
+.concept-c .ct-project:target,
+.concept-c .ct-project:hover {
+  border-left-color: var(--ct-green);
+}
+.concept-c .ct-project-path {
+  display: flex;
+  justify-content: space-between;
+  gap: 2ch;
+  font-size: 13px;
+  color: var(--ct-faint);
+}
+.concept-c .ct-kind {
+  color: var(--ct-dim);
+}
+.concept-c .ct-kind::before {
+  content: 'kind=';
+  color: var(--ct-faint);
+}
+.concept-c .ct-project-title {
+  font-size: 19px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--ct-fg);
+  margin-top: 2px;
+}
+.concept-c .ct-hash {
+  color: var(--ct-faint);
+  font-weight: 400;
+}
+.concept-c .ct-project-sub {
+  color: var(--ct-amber);
+  font-size: 14px;
+}
+.concept-c .ct-project-desc {
+  color: var(--ct-fg-2);
+  margin-top: 8px;
+  max-width: 72ch;
+}
+.concept-c .ct-highlights {
+  margin-top: 8px;
+  color: var(--ct-fg-2);
+}
+.concept-c .ct-highlights li {
+  position: relative;
+  padding-left: 2ch;
+}
+.concept-c .ct-highlights li::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+  color: var(--ct-green);
+}
+.concept-c .ct-project-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 2ch;
+  margin-top: 10px;
+}
+.concept-c .ct-src {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.concept-c .ct-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1ch;
+  font-size: 13px;
+  color: var(--ct-dim);
+}
+
+/* ---------- git log ---------- */
+.concept-c .ct-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 3ch;
+  font-size: 13px;
+  color: var(--ct-dim);
+  margin: 4px 0 20px 2ch;
+}
+.concept-c .ct-legend i {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.concept-c .ct-lg-node {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ct-fg-2);
+}
+.concept-c .ct-lg-line {
+  width: 2px;
+  height: 14px;
+  background: var(--ct-amber);
+}
+.concept-c .ct-lg-future {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--ct-dim);
+}
+
+.concept-c .ct-log {
+  padding-left: 1ch;
+}
+.concept-c .ct-row {
+  --ny: calc(var(--ct-lh) / 2);
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(var(--ct-lw) * 4 + 10px) 1fr;
+  padding-bottom: 26px;
+}
+.concept-c .ct-row.has-fork {
+  --ny: calc(var(--ct-fork) + var(--ct-lh) / 2);
+}
+.concept-c .ct-row.has-fork .ct-commit {
+  padding-top: var(--ct-fork);
+}
+.concept-c .ct-row:last-child {
+  padding-bottom: 40px;
+}
+
+.concept-c .ct-graph {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(var(--ct-lw) * 4);
+}
+.concept-c .ct-line {
+  position: absolute;
+  left: calc(var(--ct-lw) * (var(--x) + 0.5) - 1px);
+  width: 2px;
+  background: var(--c);
+}
+.concept-c .ct-line.ct-full {
+  top: 0;
+  bottom: 0;
+}
+/* the row's own line, above and below its node */
+.concept-c .ct-line.ct-up {
+  top: 0;
+  height: var(--ny);
+}
+.concept-c .ct-line.ct-down {
+  top: var(--ny);
+  bottom: 0;
+}
+.concept-c .ct-line.is-dim {
+  opacity: 0.4;
+}
+.concept-c .ct-line.is-dashed {
+  background: repeating-linear-gradient(to bottom, var(--c) 0 5px, transparent 5px 10px);
+}
+.concept-c .ct-line.is-fade {
+  background: linear-gradient(to bottom, var(--c), transparent);
+}
+
+.concept-c .ct-fork {
+  position: absolute;
+  top: calc(-1 * var(--ct-fork-lead));
+  left: 0;
+  width: 100%;
+  height: calc(var(--ny) + var(--ct-fork-lead));
+  overflow: visible;
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 2px;
+}
+.concept-c .ct-fork.is-dashed {
+  stroke-dasharray: 5 5;
+}
+
+.concept-c .ct-node {
+  position: absolute;
+  top: calc(var(--ny) - 5.5px);
+  left: calc(var(--ct-lw) * (var(--x) + 0.5) - 5.5px);
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 3px var(--ct-bg);
+}
+.concept-c .ct-node.is-head {
+  background: var(--ct-bg);
+  border: 2px solid var(--ct-green);
+}
+.concept-c .ct-node.is-future {
+  background: var(--ct-bg);
+  border: 1.5px dashed var(--ct-dim);
+}
+
+.concept-c .ct-commit {
+  grid-column: 2;
+  min-width: 0;
+}
+.concept-c .ct-c-head {
+  color: var(--ct-fg);
+}
+.concept-c .ct-sha {
+  color: var(--ct-amber);
+  margin-right: 0.5ch;
+}
+.concept-c .ct-ref {
+  margin-right: 1ch;
+  font-weight: 500;
+}
+.concept-c .ct-ref.is-head {
+  color: #8fb3c9;
+}
+.concept-c .ct-ref.is-branch {
+  color: var(--ct-green);
+}
+.concept-c .ct-ref.is-future {
+  color: var(--ct-dim);
+}
+.concept-c .ct-msg {
+  font-weight: 500;
+}
+.concept-c .ct-at {
+  color: var(--ct-faint);
+  font-weight: 400;
+}
+.concept-c .ct-msg-head {
+  color: var(--ct-dim);
+  font-weight: 400;
+  font-style: italic;
+}
+.concept-c .ct-c-date {
+  font-size: 14px;
+  color: var(--ct-fg-2);
+}
+.concept-c .ct-ongoing {
+  color: var(--ct-green);
+}
+.concept-c .ct-unmerged {
+  color: var(--ct-dim);
+}
+.concept-c .ct-c-body {
+  margin-top: 6px;
+  color: var(--ct-fg-2);
+  max-width: 64ch;
+}
+.concept-c .ct-commit .ct-tags {
+  margin-top: 6px;
+}
+
+/* future rows read as not-yet-happened */
+.concept-c .ct-row.is-future .ct-commit {
+  opacity: 0.62;
+}
+.concept-c .ct-row.is-future .ct-sha {
+  color: var(--ct-faint);
+}
+.concept-c .ct-row.is-head {
+  padding-bottom: 30px;
+}
+
+/* ---------- footer ---------- */
+.concept-c .ct-footer {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--ct-line);
+  font-size: 13px;
+  display: grid;
+  gap: 4px;
+}
+
+@media (min-width: 960px) {
+  .concept-c .ct-projects {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 40px;
+  }
+  .concept-c .ct-section + .ct-section {
+    margin-top: 56px;
+  }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 640px) {
+  .concept-c {
+    --ct-fs: 14px;
+    --ct-lh: 22px;
+    --ct-lw: 15px;
+    --ct-fork: 10px;
+    --ct-fork-lead: 18px;
+  }
+  .concept-c .ct-main {
+    padding: 36px 16px 80px;
+  }
+  .concept-c .ct-status {
+    padding: 0 8px;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .concept-c .ct-status-session,
+  .concept-c .ct-status-right {
+    display: none;
+  }
+  .concept-c .ct-status a {
+    padding: 0 6px;
+  }
+  .concept-c .ct-bio {
+    font-size: 15px;
+    line-height: 24px;
+  }
+  .concept-c .ct-kv-row {
+    grid-template-columns: 1fr;
+  }
+  .concept-c .ct-kv-row + .ct-kv-row {
+    margin-top: 6px;
+  }
+  .concept-c .ct-about-split {
+    grid-template-columns: 1fr;
+  }
+  .concept-c .ct-out {
+    padding-left: 0;
+  }
+  .concept-c .ct-log {
+    padding-left: 0;
+  }
+  .concept-c .ct-row {
+    grid-template-columns: calc(var(--ct-lw) * 4 + 6px) 1fr;
+  }
+  .concept-c .ct-project-title {
+    font-size: 17px;
+    line-height: 25px;
+  }
+  .concept-c .ct-legend {
+    margin-left: 0;
+  }
+}

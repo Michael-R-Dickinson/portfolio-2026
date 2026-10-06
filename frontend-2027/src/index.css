@@ -1,0 +1,9 @@
+/* Global CSS: Tailwind only. No theme tokens or fonts here.
+   Each concept owns its look in src/concepts/<slug>/styles.css, scoped under its root class. */
+@import 'tailwindcss';
+
+html,
+body,
+#root {
+  min-height: 100%;
+}

@@ -1,10 +1,10 @@
 import './styles.css'
-import { links, profile } from './content'
+import { links, profile } from '../../content'
 import { Hero } from './components/Hero'
 import { Projects } from './components/Projects'
 import { Timeline } from './components/Timeline'
 
-function App() {
+export default function Page() {
   return (
     <div className="concept-a">
       <Hero />
@@ -29,5 +29,3 @@ function App() {
     </div>
   )
 }
-
-export default App

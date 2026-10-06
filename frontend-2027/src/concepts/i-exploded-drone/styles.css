@@ -1,0 +1,864 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+/* Concept I: exploded-view drone. Everything scoped under .concept-i */
+.concept-i {
+  --paper: #f2f0e9;
+  --paper-2: #e9e6dc;
+  --ink: #17233d;
+  --ink-2: #4d5872;
+  --ink-3: #8891a5;
+  --rule: rgba(23, 35, 61, 0.2);
+  --rule-soft: rgba(23, 35, 61, 0.07);
+  --accent: #1f4fd8;
+  --pad: clamp(16px, 3.2vw, 44px);
+  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--rule-soft) 1px, transparent 1px), linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px),
+    linear-gradient(var(--rule-soft) 1px, transparent 1px), linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
+  background-size:
+    120px 120px,
+    120px 120px,
+    24px 24px,
+    24px 24px;
+  overflow-x: clip;
+}
+.concept-i a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+.concept-i a:hover {
+  color: var(--accent);
+}
+.concept-i a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.concept-i h1,
+.concept-i h2,
+.concept-i h3,
+.concept-i p,
+.concept-i ul,
+.concept-i ol,
+.concept-i dl,
+.concept-i dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ── stage: sticky canvas + overlay ── */
+.concept-i .ci-sheet {
+  position: relative;
+}
+.concept-i .ci-stage {
+  --e: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  pointer-events: none;
+}
+.concept-i .ci-stage canvas {
+  display: block;
+}
+.concept-i .ci-flow {
+  position: relative;
+  z-index: 1;
+  margin-top: -100vh;
+  margin-top: -100svh;
+}
+.concept-i .ci-leaders {
+  position: absolute;
+  inset: 0;
+  opacity: calc((var(--e) - 0.35) * 2.2);
+}
+.concept-i .ci-leaders path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1;
+  opacity: 0.55;
+  transition:
+    stroke 0.25s,
+    opacity 0.25s;
+}
+.concept-i .ci-pt-dot {
+  fill: var(--ink);
+}
+.concept-i .ci-pt-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.25;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.concept-i .ci-pt-no {
+  display: none;
+  font: 600 10px var(--mono);
+  text-anchor: middle;
+  fill: var(--paper);
+}
+.concept-i .ci-leaders g[data-on='true'] path {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 1;
+}
+.concept-i .ci-leaders g[data-on='true'] .ci-pt-dot {
+  fill: var(--accent);
+}
+.concept-i .ci-leaders g[data-on='true'] .ci-pt-ring {
+  opacity: 1;
+}
+.concept-i:not([data-focus='none']) .ci-leaders g[data-on='false'] path {
+  opacity: 0.22;
+}
+.concept-i .ci-minor {
+  position: absolute;
+  inset: 0;
+  opacity: calc((var(--e) - 0.6) * 2.5);
+}
+.concept-i .ci-minor span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: -8px 0 0 14px;
+  padding-left: 22px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+  will-change: transform;
+}
+.concept-i .ci-minor span[data-side='left'] {
+  margin-left: 0;
+  padding: 0 22px 0 0;
+  translate: calc(-100% - 14px) 0;
+}
+.concept-i .ci-minor span[data-side='left']::before {
+  left: auto;
+  right: 0;
+}
+.concept-i .ci-minor span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 16px;
+  border-top: 1px solid var(--ink-3);
+}
+
+/* ── hero ── */
+.concept-i .ci-hero {
+  position: relative;
+  min-height: 88vh;
+  min-height: 88svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 84px var(--pad) 72px;
+}
+.concept-i .ci-hero-meta {
+  position: absolute;
+  inset: var(--pad) var(--pad) auto;
+  display: flex;
+  gap: 28px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--ink-2);
+}
+.concept-i .ci-hero-meta span:nth-child(2) {
+  margin-right: auto;
+}
+.concept-i .ci-hero-copy {
+  max-width: 500px;
+}
+.concept-i .ci-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.concept-i .ci-name {
+  margin-top: 10px;
+  font: 700 clamp(52px, 7.2vw, 104px) / 0.9 var(--cond);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.concept-i .ci-bio {
+  margin-top: 22px;
+  font-size: 15px;
+  line-height: 1.55;
+  max-width: 44ch;
+}
+.concept-i .ci-spec {
+  margin-top: 26px;
+  border-top: 1px solid var(--ink);
+  font-size: 12px;
+}
+.concept-i .ci-spec > div {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.concept-i .ci-spec dt {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-top: 2px;
+}
+.concept-i .ci-spec dd span {
+  display: block;
+}
+.concept-i .ci-links {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.concept-i .ci-links a {
+  padding: 7px 14px;
+  border: 1px solid var(--ink);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--paper);
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.concept-i .ci-links a:first-child,
+.concept-i .ci-links a:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.concept-i .ci-scrollcue {
+  position: absolute;
+  left: var(--pad);
+  bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-2);
+}
+.concept-i .ci-scrollcue i {
+  width: 1px;
+  height: 26px;
+  background: var(--ink-2);
+  transform-origin: top;
+  animation: ci-cue 2s ease-in-out infinite;
+}
+@keyframes ci-cue {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* ── teardown (projects) ── */
+.concept-i .ci-teardown {
+  height: 140vh;
+}
+.concept-i .ci-panel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: clamp(250px, 24vw, 330px) 1fr clamp(250px, 24vw, 330px);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: 'head head head' 'left . right' 'bom bom bom';
+  gap: 18px 0;
+  padding: var(--pad);
+}
+.concept-i .ci-panel-head {
+  grid-area: head;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.concept-i .ci-panel-head h2,
+.concept-i .ci-revs-head h2 {
+  font: 600 26px/1 var(--cond);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.concept-i .ci-panel-head h2 span,
+.concept-i .ci-revs-head h2 span {
+  margin-right: 12px;
+  font: 500 10.5px var(--mono);
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  vertical-align: 0.35em;
+}
+.concept-i .ci-steps {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-2);
+}
+.concept-i .ci-steps i {
+  width: 22px;
+  height: 3px;
+  background: var(--rule);
+  transition: background 0.25s;
+}
+.concept-i .ci-steps i[data-on='true'] {
+  background: var(--accent);
+}
+.concept-i .ci-steps span {
+  margin-left: 8px;
+}
+.concept-i .ci-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 0;
+}
+.concept-i .ci-col-left {
+  grid-area: left;
+}
+.concept-i .ci-col-right {
+  grid-area: right;
+}
+.concept-i .ci-card {
+  position: relative;
+  padding: 12px 14px 12px;
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--ink);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  transition:
+    opacity 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.concept-i .ci-card header {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+}
+.concept-i .ci-no {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  font-size: 10.5px;
+  font-weight: 600;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+}
+.concept-i .ci-part,
+.concept-i .ci-source {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.concept-i .ci-source {
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-size: 11px;
+  color: var(--ink-2);
+}
+.concept-i .ci-card h3 {
+  margin: 1px 0 2px;
+  font: 600 23px/1.05 var(--cond);
+  letter-spacing: 0.01em;
+}
+.concept-i .ci-card-more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+.concept-i .ci-card-more > div {
+  overflow: hidden;
+  min-height: 0;
+}
+.concept-i .ci-card[data-state='on'] .ci-card-more {
+  grid-template-rows: 1fr;
+}
+.concept-i .ci-card-text,
+.concept-i .ci-card-more > div > ul:first-child {
+  margin-top: 10px;
+}
+.concept-i .ci-card-text {
+  font-size: 12px;
+}
+.concept-i .ci-card-more ul:not(.ci-tags) {
+  font-size: 11.5px;
+}
+.concept-i .ci-card-more ul:not(.ci-tags) li {
+  position: relative;
+  padding-left: 14px;
+  margin-top: 4px;
+}
+.concept-i .ci-card-more ul:not(.ci-tags) li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 7px;
+  border-top: 1px solid var(--accent);
+}
+.concept-i .ci-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.concept-i .ci-card .ci-tags {
+  margin-top: 10px;
+}
+.concept-i .ci-tags li {
+  padding: 1px 6px;
+  border: 1px solid var(--rule);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.concept-i .ci-card[data-state='on'] {
+  border-color: var(--accent);
+  box-shadow: 4px 4px 0 rgba(31, 79, 216, 0.12);
+  background: var(--paper);
+}
+.concept-i .ci-card[data-state='on'] .ci-no {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
+}
+.concept-i .ci-card[data-state='off'] {
+  opacity: 0.5;
+}
+
+.concept-i .ci-bom {
+  grid-area: bom;
+  font-size: 11.5px;
+}
+.concept-i .ci-bom-title {
+  padding: 5px 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+.concept-i .ci-bom-title span {
+  margin-right: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.concept-i .ci-bom li {
+  display: grid;
+  grid-template-columns: 30px minmax(190px, 1.1fr) minmax(0, 1.5fr) minmax(0, 1.3fr);
+  gap: 0 16px;
+  align-items: baseline;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.concept-i .ci-bom-item {
+  color: var(--ink-3);
+}
+.concept-i .ci-bom-name {
+  font-weight: 600;
+}
+.concept-i .ci-bom-desc,
+.concept-i .ci-bom-tags {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.concept-i .ci-bom-tags {
+  color: var(--ink-2);
+  font-size: 10.5px;
+  text-align: right;
+}
+
+/* ── revision history (timeline) ── */
+.concept-i .ci-revs {
+  position: relative;
+  z-index: 2;
+  padding: clamp(40px, 7vh, 72px) var(--pad) var(--pad);
+  background: var(--paper);
+  border-top: 1px solid var(--ink);
+}
+.concept-i .ci-revs-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 24px;
+  margin-bottom: 14px;
+}
+.concept-i .ci-revs-head p {
+  font-size: 11px;
+  color: var(--ink-2);
+}
+.concept-i .ci-revtable {
+  border: 1px solid var(--ink);
+}
+.concept-i .ci-revtable > li {
+  display: grid;
+  grid-template-columns: 58px 170px minmax(0, 1fr) minmax(150px, 330px) 96px;
+  align-items: start;
+}
+.concept-i .ci-revtable > li > * {
+  padding: 6px 12px 7px;
+  height: 100%;
+  border-left: 1px solid var(--rule);
+}
+.concept-i .ci-revtable > li > :first-child {
+  border-left: 0;
+}
+.concept-i .ci-revhead {
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper-2);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.concept-i .ci-revhead > * {
+  padding-block: 6px !important;
+}
+.concept-i .ci-rev + .ci-rev {
+  border-top: 1px solid var(--rule);
+}
+.concept-i .ci-rev-letter {
+  font: 700 24px/1.1 var(--cond);
+  text-align: center;
+}
+.concept-i .ci-rev-date {
+  font-size: 11.5px;
+  color: var(--ink-2);
+  padding-top: 9px !important;
+}
+.concept-i .ci-rev-desc h3 {
+  font: 600 20px/1.15 var(--cond);
+  letter-spacing: 0.01em;
+}
+.concept-i .ci-rev-desc h3 em {
+  margin-left: 6px;
+  font: 400 11.5px var(--mono);
+  color: var(--ink-2);
+}
+.concept-i .ci-rev-desc p {
+  margin-top: 2px;
+  font-size: 12px;
+}
+.concept-i .ci-rev .ci-tags {
+  align-content: start;
+  padding-top: 9px;
+}
+.concept-i .ci-rev-status {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-top: 10px !important;
+  color: var(--ink-2);
+}
+.concept-i .ci-rev[data-status='current'] {
+  background: rgba(31, 79, 216, 0.06);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.concept-i .ci-rev[data-status='current'] .ci-rev-status,
+.concept-i .ci-rev[data-status='current'] .ci-rev-letter {
+  color: var(--accent);
+}
+/* planned revisions: not released yet → dashed, greyed, hatched */
+.concept-i .ci-rev[data-status='future'] {
+  color: var(--ink-3);
+  border-top: 1px dashed var(--ink-3);
+  background: repeating-linear-gradient(-45deg, transparent 0 7px, rgba(23, 35, 61, 0.035) 7px 8px);
+}
+.concept-i .ci-rev[data-status='future'] > * {
+  border-left-style: dashed;
+}
+.concept-i .ci-rev[data-status='future'] .ci-rev-letter {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink-3);
+}
+.concept-i .ci-rev[data-status='future'] :is(.ci-rev-date, .ci-rev-status, em) {
+  color: var(--ink-3);
+}
+.concept-i .ci-rev[data-status='future'] .ci-tags li {
+  border-style: dashed;
+  color: var(--ink-3);
+}
+
+.concept-i .ci-titleblock {
+  margin: 28px 0 0 auto;
+  max-width: 860px;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1.8fr;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+}
+.concept-i .ci-titleblock > div {
+  padding: 7px 12px 8px;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  min-width: 0;
+}
+.concept-i .ci-titleblock > div:nth-child(3n) {
+  border-right: 0;
+}
+.concept-i .ci-titleblock > div:nth-last-child(-n + 3) {
+  border-bottom: 0;
+}
+.concept-i .ci-titleblock span {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.concept-i .ci-titleblock b {
+  font-weight: 500;
+  font-size: 12.5px;
+  overflow-wrap: anywhere;
+}
+.concept-i .ci-tb-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 14px;
+}
+
+/* short desktop viewports: tighten the pinned diagram */
+@media (min-width: 960px) and (max-height: 760px) {
+  .concept-i .ci-bom-title span + * {
+    display: none;
+  }
+  .concept-i .ci-panel {
+    gap: 10px 0;
+    padding-block: 20px;
+  }
+  .concept-i .ci-bom li {
+    padding: 3px 0;
+  }
+  .concept-i .ci-card h3 {
+    font-size: 20px;
+  }
+  .concept-i .ci-hero {
+    padding-block: 64px 56px;
+  }
+  .concept-i [data-card='compute'] .ci-card-more ul:not(.ci-tags) li:nth-child(n + 2) {
+    display: none;
+  }
+  .concept-i .ci-card-text {
+    font-size: 11.5px;
+  }
+}
+@media (min-width: 960px) and (max-width: 1199px) {
+  .concept-i .ci-minor {
+    display: none;
+  }
+}
+
+/* ── stacked layout: drone pinned on top, everything else flows under it ── */
+@media (max-width: 959px) {
+  .concept-i .ci-stage {
+    z-index: 5;
+    height: 42vh;
+    height: 42svh;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--rule-soft) 1px, transparent 1px), linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
+    background-size: 24px 24px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .concept-i .ci-flow {
+    margin-top: 0;
+  }
+  .concept-i .ci-leaders path,
+  .concept-i .ci-minor,
+  .concept-i .ci-pt-dot,
+  .concept-i .ci-hide-sm,
+  .concept-i .ci-scrollcue,
+  .concept-i .ci-steps {
+    display: none;
+  }
+  .concept-i .ci-pt-no {
+    display: block;
+  }
+  .concept-i .ci-pt-ring {
+    r: 10px;
+    fill: var(--ink);
+    stroke: var(--paper);
+    opacity: 1;
+    transition: fill 0.25s;
+  }
+  .concept-i .ci-leaders g[data-on='true'] .ci-pt-ring {
+    fill: var(--accent);
+  }
+  .concept-i .ci-hero {
+    min-height: 58vh;
+    min-height: 58svh;
+    justify-content: flex-start;
+    padding: 46px var(--pad) 36px;
+  }
+  .concept-i .ci-hero-meta {
+    inset: 14px var(--pad) auto;
+    padding-bottom: 8px;
+    font-size: 9.5px;
+  }
+  .concept-i .ci-name {
+    font-size: clamp(46px, 13.5vw, 72px);
+  }
+  .concept-i .ci-bio {
+    margin-top: 14px;
+    font-size: 13.5px;
+  }
+  .concept-i .ci-spec {
+    margin-top: 16px;
+    font-size: 11.5px;
+  }
+  .concept-i .ci-links {
+    margin-top: 16px;
+  }
+  .concept-i .ci-teardown {
+    height: auto;
+  }
+  .concept-i .ci-panel {
+    position: static;
+    height: auto;
+    display: block;
+    padding-top: 22px;
+    border-top: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .concept-i .ci-col {
+    display: contents;
+  }
+  .concept-i .ci-card {
+    margin-top: 12px;
+  }
+  .concept-i .ci-card-more {
+    grid-template-rows: 1fr;
+  }
+  .concept-i .ci-card[data-state='off'] {
+    opacity: 1;
+  }
+  /* restore reading order 01 → 04 (columns are split left/right on desktop) */
+  .concept-i .ci-panel {
+    display: flex;
+    flex-direction: column;
+  }
+  .concept-i [data-card='radio'] {
+    order: 1;
+  }
+  .concept-i [data-card='flightController'] {
+    order: 2;
+  }
+  .concept-i [data-card='gimbal'] {
+    order: 3;
+  }
+  .concept-i [data-card='compute'] {
+    order: 4;
+  }
+  .concept-i .ci-bom {
+    order: 5;
+    margin-top: 26px;
+  }
+  .concept-i .ci-bom li {
+    grid-template-columns: 24px 1fr;
+    padding: 8px 0;
+  }
+  .concept-i .ci-bom-desc,
+  .concept-i .ci-bom-tags {
+    grid-column: 2;
+    white-space: normal;
+    text-align: left;
+  }
+  .concept-i .ci-revtable > li {
+    grid-template-columns: 44px 1fr;
+  }
+  .concept-i .ci-revhead {
+    display: none !important;
+  }
+  .concept-i .ci-revtable > li > * {
+    border-left: 0;
+    height: auto;
+    padding: 0 12px 0 0;
+  }
+  .concept-i .ci-rev {
+    padding: 12px 0;
+  }
+  .concept-i .ci-rev-letter {
+    grid-row: 1 / span 4;
+    padding: 0 !important;
+  }
+  .concept-i .ci-rev > :not(.ci-rev-letter) {
+    grid-column: 2;
+  }
+  .concept-i .ci-rev-date {
+    padding-top: 0 !important;
+    font-size: 10.5px;
+  }
+  .concept-i .ci-rev .ci-tags {
+    padding-top: 7px;
+  }
+  .concept-i .ci-rev .ci-tags:empty {
+    display: none;
+  }
+  .concept-i .ci-rev-status {
+    padding-top: 7px !important;
+  }
+  .concept-i .ci-titleblock {
+    grid-template-columns: 1fr 1fr;
+  }
+  .concept-i .ci-titleblock > div:nth-child(n) {
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .concept-i .ci-titleblock > div:nth-child(2n) {
+    border-right: 0;
+  }
+  .concept-i .ci-titleblock > div:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .concept-i .ci-scrollcue i {
+    animation: none;
+  }
+  .concept-i *,
+  .concept-i *::before {
+    transition: none !important;
+  }
+}

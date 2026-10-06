@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
+
+/* Concept B: plain document. Everything scoped under .concept-b.
+   Tailwind preflight strips link/list/heading styles, so they are restored here. */
+.concept-b {
+  --b-bg: #fcfcfa;
+  --b-ink: #1b1b1b;
+  --b-muted: #6b6b6b;
+  --b-faint: #9a9a9a;
+  --b-rule: #d6d6d0;
+  --b-link: #1a0dab;
+  --b-visited: #5f2a96;
+
+  min-height: 100vh;
+  background: var(--b-bg);
+  color: var(--b-ink);
+  font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: auto;
+}
+
+.concept-b .b-page {
+  max-width: 65ch;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 3rem;
+}
+
+.concept-b a {
+  color: var(--b-link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+}
+.concept-b a:visited {
+  color: var(--b-visited);
+}
+.concept-b a:hover {
+  text-decoration-thickness: 2px;
+}
+.concept-b a:focus-visible {
+  outline: 2px solid var(--b-link);
+  outline-offset: 2px;
+}
+
+.concept-b .b-nav {
+  font-size: 0.9rem;
+  color: var(--b-muted);
+  margin-bottom: 2.5rem;
+}
+
+.concept-b h1 {
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 0.4rem;
+}
+.concept-b h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 2.75rem 0 1rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--b-rule);
+}
+
+.concept-b p {
+  margin: 0 0 1rem;
+}
+.concept-b .b-lede {
+  font-style: italic;
+  color: var(--b-muted);
+  margin-bottom: 1.5rem;
+}
+.concept-b .b-label {
+  font-weight: 600;
+}
+.concept-b .b-links {
+  margin-top: 1.25rem;
+}
+
+.concept-b .b-projects {
+  list-style: decimal;
+  padding-left: 1.6rem;
+  margin: 0;
+}
+.concept-b .b-projects li {
+  margin-bottom: 1rem;
+  padding-left: 0.25rem;
+}
+.concept-b .b-projects li::marker {
+  color: var(--b-muted);
+}
+.concept-b strong {
+  font-weight: 600;
+}
+.concept-b .b-tags {
+  color: var(--b-muted);
+}
+
+.concept-b .b-timeline {
+  width: 100%;
+  border-collapse: collapse;
+}
+.concept-b .b-timeline th,
+.concept-b .b-timeline td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--b-rule);
+}
+.concept-b .b-timeline thead th {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--b-muted);
+  border-bottom: 1px solid var(--b-ink);
+  padding-top: 0;
+}
+.concept-b .b-timeline tbody th {
+  width: 4.5rem;
+  padding-right: 1rem;
+  font-weight: 400;
+  font-variant-numeric: oldstyle-nums;
+  white-space: nowrap;
+}
+.concept-b .b-timeline .b-date {
+  color: var(--b-muted);
+}
+.concept-b .b-timeline .b-future th,
+.concept-b .b-timeline .b-future td,
+.concept-b .b-timeline .b-future .b-date,
+.concept-b .b-timeline .b-future .b-tags {
+  color: var(--b-faint);
+  font-style: italic;
+}
+.concept-b .b-timeline .b-future th,
+.concept-b .b-timeline .b-future td {
+  border-bottom-style: dashed;
+}
+
+.concept-b .b-footer {
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  color: var(--b-muted);
+}
+.concept-b .b-footer hr {
+  border: 0;
+  border-top: 1px solid var(--b-rule);
+  margin: 0 0 1rem;
+}
+.concept-b .b-footer p {
+  margin: 0 0 0.25rem;
+}
+
+@media (max-width: 480px) {
+  .concept-b {
+    font-size: 17px;
+  }
+  .concept-b .b-page {
+    padding-top: 1.75rem;
+  }
+  .concept-b h1 {
+    font-size: 1.8rem;
+  }
+  .concept-b .b-timeline tbody th {
+    width: 3.25rem;
+    padding-right: 0.75rem;
+  }
+}

@@ -4,12 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Structure
 
-The active codebase lives entirely in `frontend/`. The sibling directories are design references only:
-
-- `main_long_design/` — static HTML mockup of the main page layout
-- `projects_section_and_theme/` — Next.js prototype used to explore the projects section and color theme
-- `skills_vectors_design/` — static HTML mockup for the skills/tech stack section
-- `images/` — reference screenshots
+- `frontend/` — the live site (this directory). Deployed to https://michael-dickinson.com.
+- `../frontend-2027/` — prototyping space with several design concepts behind a switcher. This site is concept A ("split hero") ported out on its own; the other concepts are not shipped.
+- `../infra/` — OpenTofu for S3, CloudFront, Route 53, and the deploy step (see the root `README.md`).
 
 ## Commands
 
@@ -20,26 +17,26 @@ pnpm dev          # start dev server (Vite)
 pnpm build        # tsc typecheck + Vite production build
 pnpm lint         # ESLint
 pnpm preview      # preview production build locally
+pnpm run deploy   # tofu apply in ../infra: build, sync to S3, invalidate CloudFront
 ```
 
 There are no tests.
 
 ## Architecture
 
-Single-page React 19 app built with Vite, TypeScript, Tailwind CSS v4, and `wouter` for routing.
+Single-page React 19 app built with Vite, TypeScript, and Tailwind CSS v4. There is no router: `App.tsx` is the whole page, and CloudFront serves `index.html` for every path.
 
-**Routing:** `App.tsx` uses wouter's `<Switch>` / `<Route>`. Currently one route (`/`) renders `pages/Home.tsx`.
+**Page composition:** `App.tsx` renders `Hero → Projects → Timeline → footer`, all inside a `.concept-a` root element. Section components live in `src/components/`.
 
-**Page composition:** `Home.tsx` assembles the full page as a vertical stack of section components: `Nav → Hero → TechStack → Experience → Roadmap → Projects → Footer`.
+**Data:** All copy (profile, links, projects, timeline) lives in `src/content.ts` and is imported directly by components. `Projects.tsx` shows only the four project ids listed in its `PICKS` array. There is no state management or API layer.
 
-**Data:** All static content (nav links, tech categories, experience entries, projects) lives in `src/data.ts` and is imported directly by components. There is no state management or API layer.
+**Styling:** The design lives in `src/styles.css` as plain CSS with `a-` prefixed class names, scoped under `.concept-a`, with its own CSS variables (`--a-serif`, `--a-sans`, ...). `src/index.css` only imports Tailwind (used for its base reset; components do not use utility classes).
 
-**Styling:** Tailwind CSS v4 configured via the `@tailwindcss/vite` plugin (no `tailwind.config.*` file). Design tokens are CSS custom properties defined in `src/index.css` using `oklch` color values, exposed as Tailwind theme tokens via `@theme inline`. Dark mode uses the `.dark` class strategy. Key utility classes defined in `index.css`:
+**Fonts:** Newsreader (serif headings) and Inter Tight (sans body), loaded from Google Fonts via `@import` at the top of `styles.css`.
 
-- `.dot-matrix-bg` — radial-gradient dot pattern used as the page background
-- `.glass-panel` — frosted glass card effect
-- `.git-node` — ring shadow used in the Roadmap timeline nodes
+**Static files:** `public/resume.pdf` (linked from `content.ts` as `/resume.pdf`) and `public/aeac-2027-team-photo.jpg` (the hero photo; its path, dimensions, crop position, alt text, and caption are set in `src/photo.ts`).
 
-**Fonts:** Inter (body), Space Grotesk (headings), Space Mono (mono) — loaded externally, referenced via CSS variables.
+## Gotchas
 
-**Icons:** `lucide-react` for UI icons; Material Symbols icon font for tech category icons in `TechStack` (referenced by string name via `data.ts`).
+- In this shell `cat` is aliased to `bat`. Never write files with `cat > file` or `cat >> file` heredocs; the output gets terminal formatting characters. Use `command cat`, `printf`, or the Write/Edit tools.
+- `pnpm deploy` (without `run`) is a pnpm built-in, not the package script. Use `pnpm run deploy`.
